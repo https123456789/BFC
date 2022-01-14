@@ -10,7 +10,7 @@ The latest development build can be downloaded from `/dist/`.
 
 |Platform|Pre-Built|
 |--------|---------|
-| Linux x86 | :while_check_mark: |
+| Linux x86 | :white_check_mark: |
 | Linux arm | :x: |
 | Window x86 | :x: |
 
