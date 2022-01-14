@@ -1,5 +1,19 @@
 # BFC - A BrainF Compiler
 
+## Downloading
+
+The latest stable version can be downloaded from [here](<>).
+
+The latest development build can be downloaded from `/dist/`.
+
+#### Build Platforms
+
+|Platform|Pre-Built|
+|--------|---------|
+| Linux x86 | :while_check_mark: |
+| Linux arm | :x: |
+| Window x86 | :x: |
+
 ## Usage
 
 The compiler can be call with `./bfc [path to program]`.
