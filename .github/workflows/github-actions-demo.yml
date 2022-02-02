@@ -5,4 +5,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: kurocha/setup-cpp@v1
-      - run: "./build.sh"
+      - run: "ls -al"
