@@ -6,14 +6,113 @@
 #include <string>
 
 #ifdef __x86_64__
-	#define ARCHITECTURE 0
+#define ARCHITECTURE 0
 #endif
 
 #ifdef __arm__
-	#define ARCHITECTURE 1
+#define ARCHITECTURE 1
 #endif
 
+#ifdef _WIN32
+#ifdef OS
+#undef OS
+#endif
+#define OS 0
+#endif
+
+#ifdef _WIN64
+#ifdef OS
+#undef OS
+#endif
+#define OS 1
+#endif
+
+#ifdef __unix
+#ifdef OS
+#undef OS
+#endif
+#define OS 2
+#endif
+
+#ifdef __unix__
+#ifdef OS
+#undef OS
+#endif
+#define OS 3
+#endif
+
+#ifdef __APPLE__
+#ifdef OS
+#undef OS
+#endif
+#define OS 4
+#endif
+
+#ifdef __MACH__
+#ifdef OS
+#undef OS
+#endif
+#define OS 5
+#endif
+
+#ifdef __linux__
+#ifdef OS
+#undef OS
+#endif
+#define OS 6
+#endif
+
+
+int checkCompiler() {
+	int retval = -1;
+	int clangpp = 1;
+	int clang = 1;
+	int gcc = 1;
+	std::cout << "[bfc-compiler-test] Testing for clang++..." << std::endl;
+	if (OS == 0 || OS == 1) {
+		clangpp = system("clang++ --version > nul 2> nul");
+	} else {
+		clangpp = system("clang++ --version > /dev/null 2> /dev/null");
+	}
+	if (clangpp == 0) {
+		std::cout << "[bfc-compiler-test] clang++ present." << std::endl;
+		retval = 1;
+	}
+	std::cout << "[bfc-compiler-test] Testing for clang..." << std::endl;
+	if (OS == 0 || OS == 1) {
+		clang = system("clang --version > nul 2> nul");
+	} else {
+		clang = system("clang --version > /dev/null 2> /dev/null");
+	}
+	if (clang == 0) {
+		std::cout << "[bfc-compiler-test] clang present." << std::endl;
+		retval = 2;
+	}
+	std::cout << "[bfc-compiler-test] Testing for gcc..." << std::endl;
+	if (OS == 0 || OS == 1) {
+		gcc = system("gcc --version > nul 2> nul");
+	} else {
+		gcc = system("gcc --version > /dev/null 2> /dev/null");
+	}
+	if (gcc == 0) {
+		std::cout << "[bfc-compiler-test] gcc present." << std::endl;
+		retval = 3;
+	}
+	return retval;
+}
+
+void parseOptions(int argc, char *argv[]) {
+
+}
+
 int main(int argc, char *argv[]) {
+	parseOptions(argc, argv);
+	std::cout << "[bfc] Checking for compiler..." << std::endl;
+	int compiler = checkCompiler();
+	if (compiler == -1) {
+		std::cerr << "[bfc] Error: No compiler present." << std::endl;
+		_Exit(1);
+	}
 	std::cout << "[bfc] " << ARCHITECTURE << std::endl;
 	if (argc < 2) {
 		std::cerr << "[bfc] Invalid arguments." << std::endl;
@@ -26,7 +125,7 @@ int main(int argc, char *argv[]) {
 	inprogfile.close();
 	std::string s = "";
 	int si = 1;
-	std::string cp = "#include<stdio.h>\n#include <iostream>\nint read() {int c;c=getchar();while(getchar()!=10){}return c;}\nint main(int argc, char *argv[]) {int memory[30000];for (int i = 0; i < 30000; i++) {memory[i] = 0;}int pointerindex = 0;";
+	std::string cp = "#include<stdio.h>\nint read() {int c;c=getchar();while(getchar()!=10){}return c;}\nint main(int argc, char *argv[]) {int memory[30000];for (int i = 0; i < 30000; i++) {memory[i] = 0;}int pointerindex = 0;";
 	int instc = 0;
 	int percent = 0;
 	bool commentMode = false;
@@ -38,17 +137,17 @@ int main(int argc, char *argv[]) {
 		switch (curinst) {
 			case '+':
 				if (!commentMode) {
-					cp += "memory[pointerindex]+=1;/*std::cout << \"Memory dump: \" << char(memory[pointerindex]) << std::endl;*/";
+					cp += "memory[pointerindex]+=1;";
 				}
 				break;
 			case '-':
 				if (!commentMode) {
-					cp += "memory[pointerindex]-=1;/*std::cout << \"Memory dump: \" << char(memory[pointerindex]) << std::endl;*/";
+					cp += "memory[pointerindex]-=1;";
 				}
 				break;
 			case '.':
 				if (!commentMode) {
-					cp += "std::cout << char(memory[pointerindex]);";
+					cp += "printf(\"%c\", char(memory[pointerindex]));";
 				}
 				break;
 			case ',':
@@ -124,7 +223,21 @@ int main(int argc, char *argv[]) {
 	exf << cp;
 	exf.close();
 	std::cout << "[bfc] Compiling..." << std::endl;
-	int res = std::system("clang++ -o executable executable.cpp");
+	int res = -1;
+	switch (compiler) {
+		case 1:
+			// Clang++
+			res = std::system("clang++ -o executable executable.cpp");
+			break;
+		case 2:
+			// Clang
+			res = std::system("clang -o executable executable.cpp");
+			break;
+		case 3:
+			// gcc
+			res = std::system("gcc -o executable executable.cpp");
+			break;
+	}
 	if (res/256 == 1) {
 		std::cout << "[bfc] An error occured during compiling." << std::endl;
 		res = std::system("rm executable.cpp");
