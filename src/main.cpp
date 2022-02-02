@@ -5,7 +5,16 @@
 #include <thread>
 #include <string>
 
+#ifdef __x86_64__
+	#define ARCHITECTURE 0
+#endif
+
+#ifdef __arm__
+	#define ARCHITECTURE 1
+#endif
+
 int main(int argc, char *argv[]) {
+	std::cout << "[bfc] " << ARCHITECTURE << std::endl;
 	if (argc < 2) {
 		std::cerr << "[bfc] Invalid arguments." << std::endl;
 		_Exit(1);
