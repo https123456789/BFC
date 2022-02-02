@@ -1,5 +1,7 @@
 # BFC - A BrainF Compiler
 
+![Run on Replit: [https://replit.com/@https12345678/BFC](<https://replit.com/@https12345678/BFC>)](<https://github.com/https123456789/BFC/blob/main/github/runOnReplit.svg?raw=true>)
+
 ## Downloading
 
 The latest stable version can be downloaded from [here](<>).
@@ -10,7 +12,7 @@ The latest development build can be downloaded from `/dist/`.
 
 |Platform|Pre-Built|
 |--------|---------|
-| Linux x86 | :while_check_mark: |
+| Linux x86 | :white_check_mark: |
 | Linux arm | :x: |
 | Window x86 | :x: |
 
