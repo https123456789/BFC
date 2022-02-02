@@ -1,6 +1,6 @@
 # BFC - A BrainF Compiler
 
-![Run on Replit: [https://replit.com/@https12345678/BFC](<https://replit.com/@https12345678/BFC>)](<https://github.com/https123456789/BFC/blob/main/github/runOnReplit.svg?raw=true>)
+<a href="https://replit.com/@https12345678/BFC?lite=true#replit/runOnReplit.md"><img src="https://raw.githubusercontent.com/https123456789/BFC/main/github/runOnReplit.svg"></a>
 
 ## Downloading
 
@@ -33,6 +33,14 @@ The compiler can be call with `./bfc [path to program]`.
 #### Call: `./bfc myprogram.bf`
 
 ```
+[bfc] Checking for compiler...
+[bfc-compiler-test] Testing for clang++...
+[bfc-compiler-test] clang++ present.
+[bfc-compiler-test] Testing for clang...
+[bfc-compiler-test] clang present.
+[bfc-compiler-test] Testing for gcc...
+[bfc-compiler-test] gcc present.
+[bfc] 0
 [bfc] BFC - A BrainF Compiler
 [bfc] Loading myprogram.bf...
 [bfc] Parsing... ] 99%
