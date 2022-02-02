@@ -5,4 +5,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: kurocha/setup-cpp@v1
-      - run: "ls -al"
+      - name: "Checkout Repo"
+        uses: actions/checkout@v2
+      - name: "main"
+      - run: ls -al ${{ github.workspace }}
