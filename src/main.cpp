@@ -14,6 +14,7 @@
 #endif
 
 int main(int argc, char *argv[]) {
+	std::cout << "[bfc] " << ARCHITECTURE << std::endl;
 	if (argc < 2) {
 		std::cerr << "[bfc] Invalid arguments." << std::endl;
 		_Exit(1);
