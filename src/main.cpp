@@ -107,17 +107,17 @@ void parseOptions(int argc, char *argv[]) {
 
 int main(int argc, char *argv[]) {
 	parseOptions(argc, argv);
+	if (argc < 2) {
+		std::cerr << "[bfc] Invalid arguments." << std::endl;
+		_Exit(1);
+	}
 	std::cout << "[bfc] Checking for compiler..." << std::endl;
 	int compiler = checkCompiler();
 	if (compiler == -1) {
 		std::cerr << "[bfc] Error: No compiler present." << std::endl;
 		_Exit(1);
 	}
-	std::cout << "[bfc] " << ARCHITECTURE << std::endl;
-	if (argc < 2) {
-		std::cerr << "[bfc] Invalid arguments." << std::endl;
-		_Exit(1);
-	}
+	//std::cout << "[bfc] " << ARCHITECTURE << std::endl;
 	std::cout << "[bfc] BFC - A BrainF Compiler" << std::endl;
 	std::cout << "[bfc] Loading " << argv[1] << "..." << std::endl;
 	std::ifstream inprogfile(argv[1]);
@@ -204,6 +204,7 @@ int main(int argc, char *argv[]) {
 			}
 			std::cout << "[bfc] Parsing" << s << " " << curinst << " " << percent << "%\r";
 			i += 1;
+			//std::this_thread::sleep_for(std::chrono::milliseconds(100));
 		}
 		if (si > 2) {
 			si = 0;
