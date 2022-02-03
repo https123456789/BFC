@@ -3,6 +3,7 @@
 #include <streambuf>
 #include <chrono>
 #include <thread>
+#include <cstdlib>
 #include <string>
 
 #ifdef __x86_64__
@@ -75,7 +76,7 @@ int checkCompiler() {
 		clangpp = system("clang++ --version > /dev/null 2> /dev/null");
 	}
 	if (clangpp == 0) {
-		std::cout << "[bfc-compiler-test] clang++ present." << std::endl;
+		std::cout << "[bfc-compiler-test] \033[32mclang++ present.\033[0m" << std::endl;
 		retval = 1;
 	}
 	std::cout << "[bfc-compiler-test] Testing for clang..." << std::endl;
@@ -85,7 +86,7 @@ int checkCompiler() {
 		clang = system("clang --version > /dev/null 2> /dev/null");
 	}
 	if (clang == 0) {
-		std::cout << "[bfc-compiler-test] clang present." << std::endl;
+		std::cout << "[bfc-compiler-test] \033[32mclang present.\033[0m" << std::endl;
 		retval = 2;
 	}
 	std::cout << "[bfc-compiler-test] Testing for gcc..." << std::endl;
@@ -95,7 +96,7 @@ int checkCompiler() {
 		gcc = system("gcc --version > /dev/null 2> /dev/null");
 	}
 	if (gcc == 0) {
-		std::cout << "[bfc-compiler-test] gcc present." << std::endl;
+		std::cout << "[bfc-compiler-test] \033[32mgcc present.\033[0m" << std::endl;
 		retval = 3;
 	}
 	return retval;
@@ -108,19 +109,23 @@ void parseOptions(int argc, char *argv[]) {
 int main(int argc, char *argv[]) {
 	parseOptions(argc, argv);
 	if (argc < 2) {
-		std::cerr << "[bfc] Invalid arguments." << std::endl;
+		std::cerr << "\033[31m[bfc] Error: Invalid arguments.\033[0m" << std::endl;
 		_Exit(1);
 	}
 	std::cout << "[bfc] Checking for compiler..." << std::endl;
 	int compiler = checkCompiler();
 	if (compiler == -1) {
-		std::cerr << "[bfc] Error: No compiler present." << std::endl;
+		std::cerr << "\033[31m[bfc] Error: No compiler present.\033[0m" << std::endl;
 		_Exit(1);
 	}
 	//std::cout << "[bfc] " << ARCHITECTURE << std::endl;
 	std::cout << "[bfc] BFC - A BrainF Compiler" << std::endl;
 	std::cout << "[bfc] Loading " << argv[1] << "..." << std::endl;
 	std::ifstream inprogfile(argv[1]);
+	if (!inprogfile.good()) {
+		std::cerr << "\033[31m[bfc] Error: File '" << argv[1] << "' doesn\'t exist or can\'t be accessed.\033[0m" << std::endl;
+		_Exit(1);
+	}
 	std::string str((std::istreambuf_iterator<char>(inprogfile)), std::istreambuf_iterator<char>());
 	inprogfile.close();
 	std::string s = "";
@@ -129,6 +134,8 @@ int main(int argc, char *argv[]) {
 	int instc = 0;
 	int percent = 0;
 	bool commentMode = false;
+	int charcount = 0;
+	int linecount = 1;
 	while (1) {
 		s = "";
 		int i = 0;
@@ -187,10 +194,16 @@ int main(int argc, char *argv[]) {
 				break;
 			default:
 				if (!commentMode) {
-					std::cout << "Error: unexpected literal '" << curinst << "'." << std::endl;
+					std::cerr << "\033[31m[bfc-parse] Error: unexpected literal '\033[0m" << curinst << "\033[31m' at " << argv[1] << ":" << linecount << ":" << charcount << ".\033[0m" << std::endl;
 					_Exit(1);
 				}
 				break;
+		}
+		if (curinst == '\n') {
+			linecount += 1;
+			charcount = 0;
+		} else {
+			charcount += 1;
 		}
 		instc += 1;
 		while (i < 3) {
@@ -202,9 +215,8 @@ int main(int argc, char *argv[]) {
 			if (curinst == '\n') {
 				curinst = ' ';
 			}
-			std::cout << "[bfc] Parsing" << s << " " << curinst << " " << percent << "%\r";
+			std::cout << "[bfc-parse] Parsing" << s << " " << curinst << " " << percent << "%\r";
 			i += 1;
-			//std::this_thread::sleep_for(std::chrono::milliseconds(100));
 		}
 		if (si > 2) {
 			si = 0;
