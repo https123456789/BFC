@@ -2,6 +2,12 @@
 
 <a href="https://replit.com/@https12345678/BFC?lite=true#replit/runOnReplit.md"><img src="https://raw.githubusercontent.com/https123456789/BFC/main/github/runOnReplit.svg"></a>
 
+Tests:
+<div>
+	<img src="https://bfc-test.https12345678.repl.co/badges/test1.svg" alt="test1">
+	<img src="https://bfc-test.https12345678.repl.co/badges/test2.svg" alt="test2">
+</div>
+
 ## Downloading
 
 The latest stable version can be downloaded from [here](<>).
@@ -40,7 +46,6 @@ The compiler can be call with `./bfc [path to program]`.
 [bfc-compiler-test] clang present.
 [bfc-compiler-test] Testing for gcc...
 [bfc-compiler-test] gcc present.
-[bfc] 0
 [bfc] BFC - A BrainF Compiler
 [bfc] Loading myprogram.bf...
 [bfc] Parsing... ] 99%
