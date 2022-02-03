@@ -40,21 +40,8 @@ The compiler can be call with `./bfc [path to program]`.
 
 #### Call: `./bfc myprogram.bf`
 
+#### Result:
+
 ```
-[bfc] Checking for compiler...
-[bfc-compiler-test] Testing for clang++...
-[bfc-compiler-test] clang++ present.
-[bfc-compiler-test] Testing for clang...
-[bfc-compiler-test] clang present.
-[bfc-compiler-test] Testing for gcc...
-[bfc-compiler-test] gcc present.
-[bfc] BFC - A BrainF Compiler
-[bfc] Loading myprogram.bf...
-[bfc] Parsing... ] 99%
-[bfc] Done parsing.
-[bfc] Compiling...
-[bfc] Done Compiling.
-[bfc] Executing...
 Test
-[bfc] Execution complete.
 ```

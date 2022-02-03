@@ -4,7 +4,8 @@
 - Handle invalid memory shifts (#3)
 
 ## Low Priority
-- Handle command line options (#2)
+- Add warnings
 
 ## Done
+- Handle command line options (#2)
 - Handle non-existant files (#1)
