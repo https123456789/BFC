@@ -124,7 +124,7 @@ int main(int argc, char *argv[]) {
 	std::ifstream inprogfile(argv[1]);
 	if (!inprogfile.good()) {
 		std::cerr << "\033[31m[bfc] Error: File '" << argv[1] << "' doesn\'t exist or can\'t be accessed.\033[0m" << std::endl;
-		_Exit(1);
+		_Exit(2);
 	}
 	std::string str((std::istreambuf_iterator<char>(inprogfile)), std::istreambuf_iterator<char>());
 	inprogfile.close();
@@ -195,7 +195,7 @@ int main(int argc, char *argv[]) {
 			default:
 				if (!commentMode) {
 					std::cerr << "\033[31m[bfc-parse] Error: unexpected literal '\033[0m" << curinst << "\033[31m' at " << argv[1] << ":" << linecount << ":" << charcount << ".\033[0m" << std::endl;
-					_Exit(1);
+					_Exit(3);
 				}
 				break;
 		}
