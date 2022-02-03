@@ -8,6 +8,7 @@ Tests:
 	<img src="https://bfc-test.https12345678.repl.co/badges/test2.svg" alt="test2">
 	<img src="https://bfc-test.https12345678.repl.co/badges/test3.svg" alt="test3">
 	<img src="https://bfc-test.https12345678.repl.co/badges/test4.svg" alt="test4">
+	<img src="https://bfc-test.https12345678.repl.co/badges/test5.svg" alt="test5">
 </div>
 
 ## Downloading
