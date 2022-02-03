@@ -117,7 +117,7 @@ int main(int argc, char *argv[]) {
 		std::cerr << "[bfc] Error: No compiler present." << std::endl;
 		_Exit(1);
 	}
-	std::cout << "[bfc] " << ARCHITECTURE << std::endl;
+	//std::cout << "[bfc] " << ARCHITECTURE << std::endl;
 	std::cout << "[bfc] BFC - A BrainF Compiler" << std::endl;
 	std::cout << "[bfc] Loading " << argv[1] << "..." << std::endl;
 	std::ifstream inprogfile(argv[1]);
@@ -204,6 +204,7 @@ int main(int argc, char *argv[]) {
 			}
 			std::cout << "[bfc] Parsing" << s << " " << curinst << " " << percent << "%\r";
 			i += 1;
+			//std::this_thread::sleep_for(std::chrono::milliseconds(100));
 		}
 		if (si > 2) {
 			si = 0;
