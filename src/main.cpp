@@ -273,6 +273,10 @@ int main(int argc, char *argv[]) {
 					commentMode = false;
 				}
 				break;
+			// Fall through characters
+			case ' ':
+			case '\t':
+				break;
 			default:
 				if (!commentMode) {
 					std::cerr << "\033[31m[bfc-parse] UnexpectedLiteralError: unexpected literal '\033[0m" << curinst << "\033[31m' at " << argv[1] << ":" << linecount << ":" << charcount << ".\033[0m" << std::endl;

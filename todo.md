@@ -4,7 +4,7 @@
 None
 
 ## Top Priority
-None
+- Speed Improvement
 
 ## Low Priority
 - Convert to using assembly instead of clang++, clang, and gcc.
@@ -12,6 +12,7 @@ None
 ## Done
 
 ### 2-3-2022
+- Add indentation support
 - Config file to hold special configuration (like amount of memory allocated).
 - Error Types
 - Handle invalid memory shifts as error
