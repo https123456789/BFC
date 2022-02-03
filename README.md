@@ -38,6 +38,18 @@ The compiler can be call with `./bfc [path to program]`.
 	myprogram.bf
 ```
 
+#### `myprogram.bf`:
+```brainfuck
+>++++++++++[<++++++++>-]<++++.
+[-]
+>++++++++++[<++++++++++>-]<+.
+[-]
+>+++++++++++[<++++++++++>-]<+++++.
+[-]
+>+++++++++++[<++++++++++>-]<++++++.
+[-]
+```
+
 #### Call: `./bfc myprogram.bf`
 
 #### Result:
