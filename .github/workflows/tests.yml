@@ -4,5 +4,4 @@ jobs:
   Explore-GitHub-Actions:
     runs-on: ubuntu-latest
     steps:
-      - name: "main"
       - run: "curl https://bfc-test.https12345678.repl.co/test.php?test=true"
