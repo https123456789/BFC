@@ -6,6 +6,9 @@
 #include <cstdlib>
 #include <string>
 #include "cxxopts.hpp"
+#include "json.hpp"
+
+#include <typeinfo>
 
 #ifdef __x86_64__
 #define ARCHITECTURE 0
@@ -72,7 +75,8 @@ int checkCompiler(int argc, char *argv[]) {
 	int gcc = 1;
 	cxxopts::Options options("BFC", "A brainF Compiler");
 	options.add_options()
-		("v", "verbose");
+		("v", "verbose")
+		("c,config", "config", cxxopts::value<std::string>()->default_value(""));
 	auto  optres = options.parse(argc, argv);
 	if (optres["v"].as<bool>()) {
 		std::cout << "[bfc-compiler-test] Testing for clang++..." << std::endl;
@@ -122,11 +126,12 @@ int checkCompiler(int argc, char *argv[]) {
 int main(int argc, char *argv[]) {
 	cxxopts::Options options("BFC", "A brainF Compiler");
 	options.add_options()
-		("v", "verbose");
+		("v,verbose", "verbose")
+		("c,config", "config", cxxopts::value<std::string>()->default_value(""));
 	auto optres = options.parse(argc, argv);
 	std::string sourcefile = argv[1];
 	if (argc < 2) {
-		std::cerr << "\033[31m[bfc] Error: Invalid arguments.\033[0m" << std::endl;
+		std::cerr << "\033[31m[bfc] FatalError: Invalid arguments.\033[0m" << std::endl;
 		_Exit(1);
 	}
 	if (optres["v"].as<bool>()) {
@@ -134,7 +139,7 @@ int main(int argc, char *argv[]) {
 	}
 	int compiler = checkCompiler(argc, argv);
 	if (compiler == -1) {
-		std::cerr << "\033[31m[bfc] Error: No compiler present.\033[0m" << std::endl;
+		std::cerr << "\033[31m[bfc] FatalError: No compiler present.\033[0m" << std::endl;
 		_Exit(1);
 	}
 	if (ARCHITECTURE == 0) {
@@ -159,6 +164,7 @@ int main(int argc, char *argv[]) {
 	}
 	std::string str((std::istreambuf_iterator<char>(inprogfile)), std::istreambuf_iterator<char>());
 	inprogfile.close();
+
 	std::string s = "";
 	int si = 1;
 	std::string cp = "#include<stdio.h>\nint read() {int c;c=getchar();while(getchar()!=10){}return c;}\nint main(int argc, char *argv[]) {int memory[30000];for (int i = 0; i < 30000; i++) {memory[i] = 0;}int pointerindex = 0;";
@@ -167,6 +173,34 @@ int main(int argc, char *argv[]) {
 	bool commentMode = false;
 	int charcount = 0;
 	int linecount = 1;
+	// Memory
+	int memorySize = 30000;
+	int memoryPointer = 0;
+	// Errors
+	int errorCount = 0;
+	int errorMax = 1;
+
+	// Config
+	if (optres["c"].as<std::string>() != "") {
+		// Load and parse config file
+		if (optres["v"].as<bool>()) {
+			std::cout << "[bfc-config] Loading config file..." << std::endl;
+		}
+		std::ifstream configFile(optres["c"].as<std::string>());
+		nlohmann::json configData;
+		configFile >> configData;
+		if(optres["v"].as<bool>()) {
+			std::cout << "[bfc-config] Config file loaded. Parsing..." << std::endl;
+		}
+		if (configData["memoryAllocationSize"] > 0) {
+			memorySize = (int)configData["memoryAllocationSize"];
+			if (optres["v"].as<bool>()) {
+				std::cout << "[bfc-config] Memory Alloocation Size: " << memorySize << std::endl;
+			}
+		}
+		configFile.close();
+	}
+
 	while (1) {
 		s = "";
 		int i = 0;
@@ -195,11 +229,27 @@ int main(int argc, char *argv[]) {
 				break;
 			case '<':
 				if (!commentMode) {
+					memoryPointer -= 1;
+					if (memoryPointer < 0) {
+						std::cerr << "\033[31m[bfc] InvalidMemoryShiftError: memory pointer shifted to a negitive index at " << argv[1] << ":" << linecount << ":" << charcount << ":\033[0m" << std::endl;
+						errorCount += 1;
+						if (errorCount >= errorMax) {
+							_Exit(3);
+						}
+					}
 					cp += "pointerindex-=1;";
 				}
 				break;
 			case '>':
 				if (!commentMode) {
+					memoryPointer += 1;
+					if (memoryPointer > memorySize) {
+						std::cerr << "\033[31m[bfc] InvalidMemoryShiftError: memory pointer shifted beyond allocated memory at " << argv[1] << ":" << linecount << ":" << charcount << ".\033[0m" << std::endl;
+						errorCount += 1;
+						if (errorCount >= errorMax) {
+							_Exit(3);
+						}
+					}
 					cp += "pointerindex+=1;";
 				}
 				break;
@@ -225,8 +275,11 @@ int main(int argc, char *argv[]) {
 				break;
 			default:
 				if (!commentMode) {
-					std::cerr << "\033[31m[bfc-parse] Error: unexpected literal '\033[0m" << curinst << "\033[31m' at " << argv[1] << ":" << linecount << ":" << charcount << ".\033[0m" << std::endl;
-					_Exit(3);
+					std::cerr << "\033[31m[bfc-parse] UnexpectedLiteralError: unexpected literal '\033[0m" << curinst << "\033[31m' at " << argv[1] << ":" << linecount << ":" << charcount << ".\033[0m" << std::endl;
+					errorCount += 1;
+					if (errorCount >= errorMax) {
+						_Exit(3);
+					}
 				}
 				break;
 		}
@@ -266,6 +319,11 @@ int main(int argc, char *argv[]) {
 	if (optres["v"].as<bool>()) {
 		std::cout << "[bfc] Done parsing." << std::endl;
 	}
+	// Exit if there are errors
+	if (errorCount > 0) {
+		_Exit(2);
+	}
+
 	std::ofstream exf("executable.cpp");
 	exf << cp;
 	exf.close();
