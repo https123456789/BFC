@@ -5,6 +5,7 @@
 #include <thread>
 #include <cstdlib>
 #include <string>
+#include "cxxopts.hpp"
 
 #ifdef __x86_64__
 #define ARCHITECTURE 0
@@ -64,63 +65,93 @@
 #endif
 
 
-int checkCompiler() {
+int checkCompiler(int argc, char *argv[]) {
 	int retval = -1;
 	int clangpp = 1;
 	int clang = 1;
 	int gcc = 1;
-	std::cout << "[bfc-compiler-test] Testing for clang++..." << std::endl;
+	cxxopts::Options options("BFC", "A brainF Compiler");
+	options.add_options()
+		("v", "verbose");
+	auto  optres = options.parse(argc, argv);
+	if (optres["v"].as<bool>()) {
+		std::cout << "[bfc-compiler-test] Testing for clang++..." << std::endl;
+	}
 	if (OS == 0 || OS == 1) {
 		clangpp = system("clang++ --version > nul 2> nul");
 	} else {
 		clangpp = system("clang++ --version > /dev/null 2> /dev/null");
 	}
 	if (clangpp == 0) {
-		std::cout << "[bfc-compiler-test] \033[32mclang++ present.\033[0m" << std::endl;
+		if (optres["v"].as<bool>()) {
+			std::cout << "[bfc-compiler-test] \033[32mclang++ present.\033[0m" << std::endl;
+		}
 		retval = 1;
 	}
-	std::cout << "[bfc-compiler-test] Testing for clang..." << std::endl;
+	if (optres["v"].as<bool>()) {
+		std::cout << "[bfc-compiler-test] Testing for clang..." << std::endl;
+	}
 	if (OS == 0 || OS == 1) {
 		clang = system("clang --version > nul 2> nul");
 	} else {
 		clang = system("clang --version > /dev/null 2> /dev/null");
 	}
 	if (clang == 0) {
-		std::cout << "[bfc-compiler-test] \033[32mclang present.\033[0m" << std::endl;
+		if (optres["v"].as<bool>()) {
+			std::cout << "[bfc-compiler-test] \033[32mclang present.\033[0m" << std::endl;
+		}
 		retval = 2;
 	}
-	std::cout << "[bfc-compiler-test] Testing for gcc..." << std::endl;
+	if (optres["v"].as<bool>()) {
+		std::cout << "[bfc-compiler-test] Testing for gcc..." << std::endl;
+	}
 	if (OS == 0 || OS == 1) {
 		gcc = system("gcc --version > nul 2> nul");
 	} else {
 		gcc = system("gcc --version > /dev/null 2> /dev/null");
 	}
 	if (gcc == 0) {
-		std::cout << "[bfc-compiler-test] \033[32mgcc present.\033[0m" << std::endl;
+		if (optres["v"].as<bool>()) {
+			std::cout << "[bfc-compiler-test] \033[32mgcc present.\033[0m" << std::endl;
+		}
 		retval = 3;
 	}
 	return retval;
 }
 
-void parseOptions(int argc, char *argv[]) {
-
-}
-
 int main(int argc, char *argv[]) {
-	parseOptions(argc, argv);
+	cxxopts::Options options("BFC", "A brainF Compiler");
+	options.add_options()
+		("v", "verbose");
+	auto optres = options.parse(argc, argv);
+	std::string sourcefile = argv[1];
 	if (argc < 2) {
 		std::cerr << "\033[31m[bfc] Error: Invalid arguments.\033[0m" << std::endl;
 		_Exit(1);
 	}
-	std::cout << "[bfc] Checking for compiler..." << std::endl;
-	int compiler = checkCompiler();
+	if (optres["v"].as<bool>()) {
+		std::cout << "[bfc] Checking for compiler..." << std::endl;
+	}
+	int compiler = checkCompiler(argc, argv);
 	if (compiler == -1) {
 		std::cerr << "\033[31m[bfc] Error: No compiler present.\033[0m" << std::endl;
 		_Exit(1);
 	}
-	//std::cout << "[bfc] " << ARCHITECTURE << std::endl;
-	std::cout << "[bfc] BFC - A BrainF Compiler" << std::endl;
-	std::cout << "[bfc] Loading " << argv[1] << "..." << std::endl;
+	if (ARCHITECTURE == 0) {
+		if (optres["v"].as<bool>()) {
+			std::cout << "[bfc] Building for x86..." << std::endl;
+		}
+	} else {
+		if (optres["v"].as<bool>()) {
+			std::cout << "[bfc] Building for arm..." << std::endl;
+		}
+	}
+	if (optres["v"].as<bool>()) {
+		std::cout << "[bfc] BFC - A BrainF Compiler" << std::endl;
+	}
+	if (optres["v"].as<bool>()) {
+		std::cout << "[bfc] Loading " << argv[1] << "..." << std::endl;
+	}
 	std::ifstream inprogfile(argv[1]);
 	if (!inprogfile.good()) {
 		std::cerr << "\033[31m[bfc] Error: File '" << argv[1] << "' doesn\'t exist or can\'t be accessed.\033[0m" << std::endl;
@@ -215,7 +246,9 @@ int main(int argc, char *argv[]) {
 			if (curinst == '\n') {
 				curinst = ' ';
 			}
-			std::cout << "[bfc-parse] Parsing" << s << " " << curinst << " " << percent << "%\r";
+			if (optres["v"].as<bool>()) {
+				std::cout << "[bfc-parse] Parsing" << s << " " << curinst << " " << percent << "%\r";
+			}
 			i += 1;
 		}
 		if (si > 2) {
@@ -230,12 +263,15 @@ int main(int argc, char *argv[]) {
 		percent = (double)(((double)instc / (double)str.length()) * 100);
 	}
 	cp += "}";
-	std::cout << std::endl;
-	std::cout << "[bfc] Done parsing." << std::endl;
+	if (optres["v"].as<bool>()) {
+		std::cout << "[bfc] Done parsing." << std::endl;
+	}
 	std::ofstream exf("executable.cpp");
 	exf << cp;
 	exf.close();
-	std::cout << "[bfc] Compiling..." << std::endl;
+	if (optres["v"].as<bool>()) {
+		std::cout << "[bfc] Compiling..." << std::endl;
+	}
 	int res = -1;
 	switch (compiler) {
 		case 1:
@@ -256,10 +292,17 @@ int main(int argc, char *argv[]) {
 		res = std::system("rm executable.cpp");
 		_Exit(1);
 	}
-	std::cout << "[bfc] Done Compiling." << std::endl;
-	std::cout << "[bfc] Executing..." << std::endl;
+	if (optres["v"].as<bool>()) {
+		std::cout << "[bfc] Done Compiling." << std::endl;
+	}
+	if (optres["v"].as<bool>()) {
+		std::cout << "[bfc] Executing..." << std::endl;
+	}
 	res = std::system("./executable");
-	std::cout << std::endl << "[bfc] Execution complete." << std::endl;
+	std::cout << std::endl;
+	if (optres["v"].as<bool>()) {
+		std::cout << "[bfc] Execution complete." << std::endl;
+	}
 	res = std::system("rm executable executable.cpp");
 	return 0;
 }
