@@ -1,3 +1,10 @@
 # BFC To Do
-- Handle non-existant files
-- Handle command line options
+
+## Top Priority
+- Handle invalid memory shifts (#3)
+
+## Low Priority
+- Handle command line options (#2)
+
+## Done
+- Handle non-existant files (#1)
