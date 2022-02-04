@@ -1,3 +1,2 @@
 src/cxxopts.hpp linguist-vendored
 src/json.hpp linguist-vendored
-tests/*.bf linguist-detectable=false

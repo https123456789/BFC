@@ -8,8 +8,6 @@
 #include "cxxopts.hpp"
 #include "json.hpp"
 
-#include <typeinfo>
-
 #ifdef __x86_64__
 #define ARCHITECTURE 0
 #endif
