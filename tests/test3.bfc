@@ -1,3 +1,4 @@
 {
-	"memoryAllocationSize": 30000
+	"memoryAllocationSize": 30000,
+	"warnOnNegitiveShift": true
 }

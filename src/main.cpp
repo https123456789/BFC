@@ -174,6 +174,10 @@ int main(int argc, char *argv[]) {
 	// Memory
 	int memorySize = 30000;
 	int memoryPointer = 0;
+
+	// Warnings
+	bool warnOnNegitiveShift = false;
+
 	// Errors
 	int errorCount = 0;
 	int errorMax = 1;
@@ -194,6 +198,12 @@ int main(int argc, char *argv[]) {
 			memorySize = (int)configData["memoryAllocationSize"];
 			if (optres["v"].as<bool>()) {
 				std::cout << "[bfc-config] Memory Alloocation Size: " << memorySize << std::endl;
+			}
+		}
+		if (configData["warnOnNegitiveShift"]) {
+			warnOnNegitiveShift = configData["warnOnNegitiveShift"];
+			if (optres["v"].as<bool>()) {
+				std::cout << "[bfc-config] Warning on negitive shifting. (Not Recomended)" << std::endl;
 			}
 		}
 		configFile.close();
@@ -229,10 +239,16 @@ int main(int argc, char *argv[]) {
 				if (!commentMode) {
 					memoryPointer -= 1;
 					if (memoryPointer < 0) {
-						std::cerr << "\033[31m[bfc] InvalidMemoryShiftError: memory pointer shifted to a negitive index at " << argv[1] << ":" << linecount << ":" << charcount << ":\033[0m" << std::endl;
-						errorCount += 1;
-						if (errorCount >= errorMax) {
-							_Exit(3);
+						if (warnOnNegitiveShift) {
+							std::cout << "\033[33m[bfc] Warning: negitive shift attempted at " << argv[1] << ":" << linecount << ":" << charcount << ". Instruction skipped.\033[0m" << std::endl;
+							memoryPointer += 1;
+							break;
+						} else {
+							std::cerr << "\033[31m[bfc] InvalidMemoryShiftError: memory pointer shifted to a negitive index at " << argv[1] << ":" << linecount << ":" << charcount << ":\033[0m" << std::endl;
+							errorCount += 1;
+							if (errorCount >= errorMax) {
+								_Exit(3);
+							}
 						}
 					}
 					cp += "pointerindex-=1;";
