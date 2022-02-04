@@ -2,5 +2,5 @@
 
 ## Pages
 
-- [options](</options>)
-- [config files](</configFiles>)
+- [options](</BFC/options>)
+- [config files](</BFC/configFiles>)
