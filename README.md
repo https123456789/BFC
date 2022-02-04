@@ -3,13 +3,12 @@
 <a href="https://replit.com/@https12345678/BFC?lite=true#replit/runOnReplit.md"><img src="https://raw.githubusercontent.com/https123456789/BFC/main/github/runOnReplit.svg"></a>
 
 Tests:
-<div>
-	<img src="https://bfc-test.https12345678.repl.co/badges/test1.svg" alt="test1">
-	<img src="https://bfc-test.https12345678.repl.co/badges/test2.svg" alt="test2">
-	<img src="https://bfc-test.https12345678.repl.co/badges/test3.svg" alt="test3">
-	<img src="https://bfc-test.https12345678.repl.co/badges/test4.svg" alt="test4">
-	<img src="https://bfc-test.https12345678.repl.co/badges/test5.svg" alt="test5">
-</div>
+
+![test1](<https://bfc-test.https12345678.repl.co/badges/test1.svg>)
+![test2](<https://bfc-test.https12345678.repl.co/badges/test2.svg>)
+![test3](<https://bfc-test.https12345678.repl.co/badges/test3.svg>)
+![test4](<https://bfc-test.https12345678.repl.co/badges/test4.svg>)
+![test5](<https://bfc-test.https12345678.repl.co/badges/test5.svg>)
 
 ## Downloading
 
