@@ -11,6 +11,9 @@ None
 
 ## Done
 
+### 2-4-2022
+- Negitive shifts skipped and warned
+
 ### 2-3-2022
 - Add indentation support
 - Config file to hold special configuration (like amount of memory allocated).
