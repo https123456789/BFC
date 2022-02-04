@@ -214,93 +214,94 @@ int main(int argc, char *argv[]) {
 		int i = 0;
 		// Parse
 		char curinst = str[instc];
-		switch (curinst) {
-			case '+':
-				if (!commentMode) {
-					cp += "memory[pointerindex]+=1;";
-				}
-				break;
-			case '-':
-				if (!commentMode) {
-					cp += "memory[pointerindex]-=1;";
-				}
-				break;
-			case '.':
-				if (!commentMode) {
-					cp += "printf(\"%c\", char(memory[pointerindex]));";
-				}
-				break;
-			case ',':
-				if (!commentMode) {
+		if (!commentMode) {
+			switch (curinst) {
+				case '+':
+				case '-':
+					{
+						std::string s = "";
+						s += "memory[pointerindex]";
+						s += curinst;
+						s += "=1;";
+						cp += s;
+					}
+					break;
+				case '.':
+					{
+						cp += "printf(\"%c\", char(memory[pointerindex]));";
+					}
+					break;
+				case ',':
 					cp += "memory[pointerindex]=read();";
-				}
-				break;
-			case '<':
-				if (!commentMode) {
-					memoryPointer -= 1;
-					if (memoryPointer < 0) {
-						if (warnOnNegitiveShift) {
-							std::cout << "\033[33m[bfc] Warning: negitive shift attempted at " << argv[1] << ":" << linecount << ":" << charcount << ". Instruction skipped.\033[0m" << std::endl;
-							memoryPointer += 1;
-							break;
-						} else {
-							std::cerr << "\033[31m[bfc] InvalidMemoryShiftError: memory pointer shifted to a negitive index at " << argv[1] << ":" << linecount << ":" << charcount << ":\033[0m" << std::endl;
+					break;
+				case '<':
+					{
+						memoryPointer -= 1;
+						if (memoryPointer < 0) {
+							if (warnOnNegitiveShift) {
+								std::cout << "\033[33m[bfc] Warning: negitive shift attempted at " << argv[1] << ":" << linecount << ":" << charcount << ". Instruction skipped.\033[0m" << std::endl;
+								memoryPointer += 1;
+								break;
+							} else {
+								std::cerr << "\033[31m[bfc] InvalidMemoryShiftError: memory pointer shifted to a negitive index at " << argv[1] << ":" << linecount << ":" << charcount << ":\033[0m" << std::endl;
+								errorCount += 1;
+								if (errorCount >= errorMax) {
+									_Exit(3);
+								}
+							}
+						}
+						cp += "pointerindex-=1;";
+					}
+					break;
+				case '>':
+					{
+						memoryPointer += 1;
+						if (memoryPointer > memorySize) {
+							std::cerr << "\033[31m[bfc] InvalidMemoryShiftError: memory pointer shifted beyond allocated memory at " << argv[1] << ":" << linecount << ":" << charcount << ".\033[0m" << std::endl;
 							errorCount += 1;
 							if (errorCount >= errorMax) {
 								_Exit(3);
 							}
 						}
+						cp += "pointerindex+=1;";
 					}
-					cp += "pointerindex-=1;";
-				}
-				break;
-			case '>':
-				if (!commentMode) {
-					memoryPointer += 1;
-					if (memoryPointer > memorySize) {
-						std::cerr << "\033[31m[bfc] InvalidMemoryShiftError: memory pointer shifted beyond allocated memory at " << argv[1] << ":" << linecount << ":" << charcount << ".\033[0m" << std::endl;
+					break;
+				case '[':
+					{
+						cp += "while (memory[pointerindex] != 0){";
+					}
+					break;
+				case ']':
+					{
+						cp += "}";
+					}
+					break;
+				case ';':
+					{
+						commentMode = true;
+					}
+					break;
+				case '\n':
+					{
+						commentMode = false;
+					}
+					break;
+				// Fall through characters
+				case ' ':
+				case '\t':
+					break;
+				default:
+					{
+						std::cerr << "\033[31m[bfc-parse] UnexpectedLiteralError: unexpected literal '\033[0m" << curinst << "\033[31m' at " << argv[1] << ":" << linecount << ":" << charcount << ".\033[0m" << std::endl;
 						errorCount += 1;
 						if (errorCount >= errorMax) {
 							_Exit(3);
 						}
 					}
-					cp += "pointerindex+=1;";
-				}
-				break;
-			case '[':
-				if (!commentMode) {
-					cp += "while (memory[pointerindex] != 0){";
-				}
-				break;
-			case ']':
-				if (!commentMode) {
-					cp += "}";
-				}
-				break;
-			case ';':
-				if (!commentMode) {
-					commentMode = true;
-				}
-				break;
-			case '\n':
-				if (commentMode) {
-					commentMode = false;
-				}
-				break;
-			// Fall through characters
-			case ' ':
-			case '\t':
-				break;
-			default:
-				if (!commentMode) {
-					std::cerr << "\033[31m[bfc-parse] UnexpectedLiteralError: unexpected literal '\033[0m" << curinst << "\033[31m' at " << argv[1] << ":" << linecount << ":" << charcount << ".\033[0m" << std::endl;
-					errorCount += 1;
-					if (errorCount >= errorMax) {
-						_Exit(3);
-					}
-				}
-				break;
+					break;
+			}
 		}
+		
 		if (curinst == '\n') {
 			linecount += 1;
 			charcount = 0;
