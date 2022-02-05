@@ -1,10 +1,10 @@
 # BFC To Do
 
 ## In Progress
-- Speed Improvement
+None
 
 ## Top Priority
-None
+- Speed Improvement
 
 ## Low Priority
 - Convert to using assembly instead of clang++, clang, and gcc.
