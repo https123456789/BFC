@@ -217,6 +217,14 @@ int main(int argc, char *argv[]) {
 		if (!commentMode) {
 			switch (curinst) {
 				case '+':
+					{
+						std::string s = "";
+						s += "memory[pointerindex]";
+						s += curinst;
+						s += "=1;";
+						cp += s;
+					}
+					break;
 				case '-':
 					{
 						std::string s = "";
@@ -286,7 +294,7 @@ int main(int argc, char *argv[]) {
 						commentMode = false;
 					}
 					break;
-				// Fall through characters
+				// Fall through indentation characters
 				case ' ':
 				case '\t':
 					break;
@@ -301,10 +309,11 @@ int main(int argc, char *argv[]) {
 					break;
 			}
 		}
-		
+
 		if (curinst == '\n') {
 			linecount += 1;
 			charcount = 0;
+			commentMode = false;
 		} else {
 			charcount += 1;
 		}
