@@ -1,1 +1,1 @@
-run = "cd tests; ./bfc test1.bf"
+run = "./build.sh && cd tests && ./bfc test1.bf"

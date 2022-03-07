@@ -2,8 +2,9 @@
 
 ## Pages
 
-- [options](</BFC/options>)
-- [config files](</BFC/configFiles>)
+- [Download](</BFC/download>)
+- [Options](</BFC/options>)
+- [Config Files](</BFC/configFiles>)
 
 ## Example
 

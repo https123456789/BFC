@@ -1,132 +1,19 @@
-#include <iostream>
-#include <fstream>
-#include <streambuf>
-#include <chrono>
-#include <thread>
-#include <cstdlib>
-#include <string>
-#include "cxxopts.hpp"
-#include "json.hpp"
+#include "bfc.hpp"
 
-#ifdef __x86_64__
-#define ARCHITECTURE 0
-#endif
-
-#ifdef __arm__
-#define ARCHITECTURE 1
-#endif
-
-#ifdef _WIN32
-#ifdef OS
-#undef OS
-#endif
-#define OS 0
-#endif
-
-#ifdef _WIN64
-#ifdef OS
-#undef OS
-#endif
-#define OS 1
-#endif
-
-#ifdef __unix
-#ifdef OS
-#undef OS
-#endif
-#define OS 2
-#endif
-
-#ifdef __unix__
-#ifdef OS
-#undef OS
-#endif
-#define OS 3
-#endif
-
-#ifdef __APPLE__
-#ifdef OS
-#undef OS
-#endif
-#define OS 4
-#endif
-
-#ifdef __MACH__
-#ifdef OS
-#undef OS
-#endif
-#define OS 5
-#endif
-
-#ifdef __linux__
-#ifdef OS
-#undef OS
-#endif
-#define OS 6
-#endif
-
-
-int checkCompiler(int argc, char *argv[]) {
-	int retval = -1;
-	int clangpp = 1;
-	int clang = 1;
-	int gcc = 1;
-	cxxopts::Options options("BFC", "A brainF Compiler");
-	options.add_options()
-		("v", "verbose")
-		("c,config", "config", cxxopts::value<std::string>()->default_value(""));
-	auto  optres = options.parse(argc, argv);
-	if (optres["v"].as<bool>()) {
-		std::cout << "[bfc-compiler-test] Testing for clang++..." << std::endl;
-	}
-	if (OS == 0 || OS == 1) {
-		clangpp = system("clang++ --version > nul 2> nul");
-	} else {
-		clangpp = system("clang++ --version > /dev/null 2> /dev/null");
-	}
-	if (clangpp == 0) {
-		if (optres["v"].as<bool>()) {
-			std::cout << "[bfc-compiler-test] \033[32mclang++ present.\033[0m" << std::endl;
-		}
-		retval = 1;
-	}
-	if (optres["v"].as<bool>()) {
-		std::cout << "[bfc-compiler-test] Testing for clang..." << std::endl;
-	}
-	if (OS == 0 || OS == 1) {
-		clang = system("clang --version > nul 2> nul");
-	} else {
-		clang = system("clang --version > /dev/null 2> /dev/null");
-	}
-	if (clang == 0) {
-		if (optres["v"].as<bool>()) {
-			std::cout << "[bfc-compiler-test] \033[32mclang present.\033[0m" << std::endl;
-		}
-		retval = 2;
-	}
-	if (optres["v"].as<bool>()) {
-		std::cout << "[bfc-compiler-test] Testing for gcc..." << std::endl;
-	}
-	if (OS == 0 || OS == 1) {
-		gcc = system("gcc --version > nul 2> nul");
-	} else {
-		gcc = system("gcc --version > /dev/null 2> /dev/null");
-	}
-	if (gcc == 0) {
-		if (optres["v"].as<bool>()) {
-			std::cout << "[bfc-compiler-test] \033[32mgcc present.\033[0m" << std::endl;
-		}
-		retval = 3;
-	}
-	return retval;
-}
+int checkCompiler(int argc, char *argv[]);
+void printVersion(void);
 
 int main(int argc, char *argv[]) {
 	cxxopts::Options options("BFC", "A brainF Compiler");
 	options.add_options()
+		("version", "version")
 		("v,verbose", "verbose")
 		("c,config", "config", cxxopts::value<std::string>()->default_value(""));
 	auto optres = options.parse(argc, argv);
+	if (optres["version"].as<bool>()) {
+		printVersion();
+		_Exit(0);
+	}
 	std::string sourcefile = argv[1];
 	if (argc < 2) {
 		std::cerr << "\033[31m[bfc] FatalError: Invalid arguments.\033[0m" << std::endl;
@@ -361,14 +248,10 @@ int main(int argc, char *argv[]) {
 	int res = -1;
 	switch (compiler) {
 		case 1:
-			// Clang++
-			res = std::system("clang++ -o executable executable.cpp");
-			break;
-		case 2:
 			// Clang
 			res = std::system("clang -o executable executable.cpp");
 			break;
-		case 3:
+		case 2:
 			// gcc
 			res = std::system("gcc -o executable executable.cpp");
 			break;
@@ -391,4 +274,49 @@ int main(int argc, char *argv[]) {
 	}
 	res = std::system("rm executable executable.cpp");
 	return 0;
+}
+
+int checkCompiler(int argc, char *argv[]) {
+	int retval = -1;
+	int clang = 1;
+	int gcc = 1;
+	cxxopts::Options options("BFC", "A brainF Compiler");
+	options.add_options()
+		("version", "version")
+		("v,verbose", "verbose")
+		("c,config", "config", cxxopts::value<std::string>()->default_value(""));
+	auto  optres = options.parse(argc, argv);
+	if (optres["v"].as<bool>()) {
+		std::cout << "[bfc-compiler-test] Testing for clang..." << std::endl;
+	}
+	if (OS == 0 || OS == 1) {
+		clang = system("clang --version > nul 2> nul");
+	} else {
+		clang = system("clang --version > /dev/null 2> /dev/null");
+	}
+	if (clang == 0) {
+		if (optres["v"].as<bool>()) {
+			std::cout << "[bfc-compiler-test] \033[32mclang present.\033[0m" << std::endl;
+		}
+		retval = 1;
+	}
+	if (optres["v"].as<bool>()) {
+		std::cout << "[bfc-compiler-test] Testing for gcc..." << std::endl;
+	}
+	if (OS == 0 || OS == 1) {
+		gcc = system("gcc --version > nul 2> nul");
+	} else {
+		gcc = system("gcc --version > /dev/null 2> /dev/null");
+	}
+	if (gcc == 0) {
+		if (optres["v"].as<bool>()) {
+			std::cout << "[bfc-compiler-test] \033[32mgcc present.\033[0m" << std::endl;
+		}
+		retval = 2;
+	}
+	return retval;
+}
+
+void printVersion(void) {
+	std::cout << "[bfc] Version:" << std::endl << "BFC " << versionTop << "." << versionL2 << "." << versionL3 << std::endl;
 }
