@@ -1,9 +1,13 @@
 # Options
 
-- `-v`
+- `-v,--verbose`
  
- Verbose output
+ Verbose output.
 
-- `-c`
- 
- Specify a config file. See [/configFiles](</BFC/configFiles>).
+- `-c,--config`
+
+ Specify a config file. See [configFiles](</BFC/configFiles>).
+
+- `--version`
+
+ Print version.
