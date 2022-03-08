@@ -91,9 +91,7 @@ namespace BFCRuntime {
 	int read() {
 		int c;
 		c = getchar();
-		while(getchar()!=10) {
-			
-		}
+		while(getchar()!=10) {}
 		return c;
 	}
 }
