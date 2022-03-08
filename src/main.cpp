@@ -1,24 +1,119 @@
-#include "bfc.hpp"
+#include <iostream>
+#include <fstream>	
+#include <streambuf>
+#include <chrono>
+#include <thread>
+#include <cstdlib>
+#include <string>
+#include "lib/cxxopts.hpp"
+#include "lib/json.hpp"
+
+#ifdef __x86_64__
+#define ARCHITECTURE 0
+#endif
+
+#ifdef __arm__
+#define ARCHITECTURE 1
+#endif
+
+#ifdef _WIN32
+#ifdef OS
+#undef OS
+#endif
+#define OS 0
+#endif
+
+#ifdef _WIN64
+#ifdef OS
+#undef OS
+#endif
+#define OS 1
+#endif
+
+#ifdef __unix
+#ifdef OS
+#undef OS
+#endif
+#define OS 2
+#endif
+
+#ifdef __unix__
+#ifdef OS
+#undef OS
+#endif
+#define OS 3
+#endif
+
+#ifdef __APPLE__
+#ifdef OS
+#undef OS
+#endif
+#define OS 4
+#endif
+
+#ifdef __MACH__
+#ifdef OS
+#undef OS
+#endif
+#define OS 5
+#endif
+
+#ifdef __linux__
+#ifdef OS
+#undef OS
+#endif
+#define OS 6
+#endif
+
+int versionTop = 0;
+int versionL2 = 0;
+int versionL3 = 1;
 
 int checkCompiler(int argc, char *argv[]);
 void printVersion(void);
 
+namespace BFCRuntime {
+	// Memory
+	int memory[30000];
+	int memoryPointer = 0;
+
+	// Warnings
+	bool warnOnNegitiveShift = false;
+
+	// Errors
+	int errorCount = 0;
+	int errorMax = 1;
+	void initMemory(void) {
+		for (int i = 0; i < sizeof(memory) / sizeof(memory[0]); i++) {
+			memory[i] = 0;
+		}
+	}
+	int read() {
+		int c;
+		c = getchar();
+		while(getchar()!=10) {
+			
+		}
+		return c;
+	}
+}
+
 int main(int argc, char *argv[]) {
+	// Command line options/arguments
 	cxxopts::Options options("BFC", "A brainF Compiler");
 	options.add_options()
 		("version", "version")
 		("v,verbose", "verbose")
 		("c,config", "config", cxxopts::value<std::string>()->default_value(""));
 	auto optres = options.parse(argc, argv);
+
+	// Check for version options
 	if (optres["version"].as<bool>()) {
 		printVersion();
 		_Exit(0);
 	}
-	std::string sourcefile = argv[1];
-	if (argc < 2) {
-		std::cerr << "\033[31m[bfc] FatalError: Invalid arguments.\033[0m" << std::endl;
-		_Exit(1);
-	}
+
+	// Check for compiler
 	if (optres["v"].as<bool>()) {
 		std::cout << "[bfc] Checking for compiler..." << std::endl;
 	}
@@ -27,6 +122,8 @@ int main(int argc, char *argv[]) {
 		std::cerr << "\033[31m[bfc] FatalError: No compiler present.\033[0m" << std::endl;
 		_Exit(1);
 	}
+
+	// Detect build platform
 	if (ARCHITECTURE == 0) {
 		if (optres["v"].as<bool>()) {
 			std::cout << "[bfc] Building for x86..." << std::endl;
@@ -36,12 +133,16 @@ int main(int argc, char *argv[]) {
 			std::cout << "[bfc] Building for arm..." << std::endl;
 		}
 	}
+
 	if (optres["v"].as<bool>()) {
 		std::cout << "[bfc] BFC - A BrainF Compiler" << std::endl;
 	}
+
+	// Load program
 	if (optres["v"].as<bool>()) {
 		std::cout << "[bfc] Loading " << argv[1] << "..." << std::endl;
 	}
+	std::string sourcefile = argv[1];
 	std::ifstream inprogfile(argv[1]);
 	if (!inprogfile.good()) {
 		std::cerr << "\033[31m[bfc] Error: File '" << argv[1] << "' doesn\'t exist or can\'t be accessed.\033[0m" << std::endl;

@@ -17,15 +17,15 @@
 
 The latest stable version can be downloaded from [here](<>).
 
-The latest development build can be downloaded from `/dist/`.
+The latest development build can be downloaded from [here](<https://github.com/https123456789/BFC/tree/main/dist>).
 
 #### Build Platforms
 
 |Platform|Pre-Built|
 |--------|---------|
-| Linux x86 | :white_check_mark: |
-| Linux arm | :x: |
-| Window x86 | :x: |
+| Linux x86 | ✅ |
+| Linux arm | ❌ |
+| Window x86 | ❌ |
 
 ## Usage
 
@@ -53,7 +53,7 @@ The compiler can be call with `./bfc [path to program]`.
 [-]
 ```
 
-#### Call: `./bfc myprogram.bf`
+Call: `./bfc myprogram.bf`
 
 #### Result:
 
