@@ -1,5 +1,7 @@
 # BFC - A BrainF Compiler
 
+<img src="https://www.codefactor.io/repository/github/https123456789/BFC/badge">
+
 <a href="https://replit.com/@https12345678/BFC?lite=true#replit/runOnReplit.md"><img src="https://raw.githubusercontent.com/https123456789/BFC/main/github/runOnReplit.svg"></a>
 
 ![test1](<https://bfc-test.https12345678.repl.co/badges/test1.svg>)
