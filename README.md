@@ -2,8 +2,12 @@
 
 <img src="https://repl.it/badge/github/https12345678/BFC">
 <img src="https://img.shields.io/github/downloads/https123456789/BFC/total">
+<img src="https://img.shields.io/github/last-commit/https123456789/BFC">
+<hr>
 <img src="https://img.shields.io/github/stars/https123456789/BFC">
 <img src="https://img.shields.io/github/watchers/https123456789/BFC">
+<img src="https://img.shields.io/github/commit-activity/y/https123456789/BFC">
+<img src="https://img.shields.io/github/contributors/https123456789/BFC?color=success">
 <hr>
 <img src="https://www.codefactor.io/repository/github/https123456789/BFC/badge">
 <img src="https://img.shields.io/tokei/lines/github/https123456789/BFC?label=Lines%20of%20Code">
