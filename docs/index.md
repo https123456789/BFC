@@ -23,6 +23,7 @@
 
 - [Options](<options>)
 - [Config Files](<configFiles>)
+- [Tests](</BFC/tests>)
 
 ## Downloading
 
