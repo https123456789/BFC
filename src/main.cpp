@@ -71,9 +71,11 @@ int versionL3 = 1;
 
 int checkCompiler(int argc, char *argv[]);
 void printVersion(void);
-
+void printMessage(std::string message);
+/*
 namespace BFCRuntime {
 	// Memory
+	int memorySize = 30000;
 	int memory[30000];
 	int memoryPointer = 0;
 
@@ -84,7 +86,7 @@ namespace BFCRuntime {
 	int errorCount = 0;
 	int errorMax = 1;
 	void initMemory(void) {
-		for (int i = 0; i < sizeof(memory) / sizeof(memory[0]); i++) {
+		for (int i = 0; i < memorySize; i++) {
 			memory[i] = 0;
 		}
 	}
@@ -95,7 +97,7 @@ namespace BFCRuntime {
 		return c;
 	}
 }
-
+*/
 int main(int argc, char *argv[]) {
 	// Command line options/arguments
 	cxxopts::Options options("BFC", "A brainF Compiler");
@@ -418,4 +420,8 @@ int checkCompiler(int argc, char *argv[]) {
 
 void printVersion(void) {
 	std::cout << "[bfc] Version:" << std::endl << "BFC " << versionTop << "." << versionL2 << "." << versionL3 << std::endl;
+}
+
+void printMessage(std::string message) {
+	std::cout << message << std::endl;
 }
