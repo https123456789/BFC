@@ -1,75 +1,9 @@
-#include <iostream>
-#include <fstream>	
-#include <streambuf>
-#include <chrono>
-#include <thread>
-#include <cstdlib>
-#include <string>
-#include "lib/cxxopts.hpp"
-#include "lib/json.hpp"
-
-#ifdef __x86_64__
-#define ARCHITECTURE 0
-#endif
-
-#ifdef __arm__
-#define ARCHITECTURE 1
-#endif
-
-#ifdef _WIN32
-#ifdef OS
-#undef OS
-#endif
-#define OS 0
-#endif
-
-#ifdef _WIN64
-#ifdef OS
-#undef OS
-#endif
-#define OS 1
-#endif
-
-#ifdef __unix
-#ifdef OS
-#undef OS
-#endif
-#define OS 2
-#endif
-
-#ifdef __unix__
-#ifdef OS
-#undef OS
-#endif
-#define OS 3
-#endif
-
-#ifdef __APPLE__
-#ifdef OS
-#undef OS
-#endif
-#define OS 4
-#endif
-
-#ifdef __MACH__
-#ifdef OS
-#undef OS
-#endif
-#define OS 5
-#endif
-
-#ifdef __linux__
-#ifdef OS
-#undef OS
-#endif
-#define OS 6
-#endif
+#include "bfc.hpp"
 
 int versionTop = 0;
 int versionL2 = 0;
 int versionL3 = 1;
 
-int checkCompiler(int argc, char *argv[]);
 void printVersion(void);
 void printMessage(std::string message);
 /*
@@ -375,47 +309,6 @@ int main(int argc, char *argv[]) {
 	}
 	res = std::system("rm executable executable.cpp");
 	return 0;
-}
-
-int checkCompiler(int argc, char *argv[]) {
-	int retval = -1;
-	int clang = 1;
-	int gcc = 1;
-	cxxopts::Options options("BFC", "A brainF Compiler");
-	options.add_options()
-		("version", "version")
-		("v,verbose", "verbose")
-		("c,config", "config", cxxopts::value<std::string>()->default_value(""));
-	auto  optres = options.parse(argc, argv);
-	if (optres["v"].as<bool>()) {
-		std::cout << "[bfc-compiler-test] Testing for clang..." << std::endl;
-	}
-	if (OS == 0 || OS == 1) {
-		clang = system("clang --version > nul 2> nul");
-	} else {
-		clang = system("clang --version > /dev/null 2> /dev/null");
-	}
-	if (clang == 0) {
-		if (optres["v"].as<bool>()) {
-			std::cout << "[bfc-compiler-test] \033[32mclang present.\033[0m" << std::endl;
-		}
-		retval = 1;
-	}
-	if (optres["v"].as<bool>()) {
-		std::cout << "[bfc-compiler-test] Testing for gcc..." << std::endl;
-	}
-	if (OS == 0 || OS == 1) {
-		gcc = system("gcc --version > nul 2> nul");
-	} else {
-		gcc = system("gcc --version > /dev/null 2> /dev/null");
-	}
-	if (gcc == 0) {
-		if (optres["v"].as<bool>()) {
-			std::cout << "[bfc-compiler-test] \033[32mgcc present.\033[0m" << std::endl;
-		}
-		retval = 2;
-	}
-	return retval;
 }
 
 void printVersion(void) {
