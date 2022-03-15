@@ -1,4 +1,4 @@
-files := src/main.cpp
+files := src/main.cpp src/compiler.cpp
 build: compile copy move
 	echo "Built."
 compile: $(files)
