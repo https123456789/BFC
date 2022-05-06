@@ -1,3 +1,7 @@
+---
+title: Test 5
+parent: Tests
+---
 # Test 5
 
 <img src="https://bfc-test.https12345678.repl.co/badge.php?test=5">

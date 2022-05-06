@@ -1,3 +1,8 @@
+---
+has_children: true
+title: Tests
+has_toc: false
+---
 # Tests
 
 This is a collection of all of the tests used to benchmark this program.

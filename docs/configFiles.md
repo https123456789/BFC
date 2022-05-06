@@ -1,3 +1,6 @@
+---
+title: Config Files
+---
 # Config Files
 
 Config files are a way to modify the way BFC handles your program, from setting the amount of memory available, to telling BFC how to handle errors.
@@ -5,6 +8,9 @@ Config files are a way to modify the way BFC handles your program, from setting 
 ## Flags:
 
 ### `warnOnNegativeShift`
+
+Dangerous
+{: .label .label-red }
 
 Type: `bool`
 

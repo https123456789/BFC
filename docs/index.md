@@ -1,6 +1,10 @@
+---
+title: BFC - A BrainF Compiler
+nav_order: 1
+---
 # BFC - A BrainF Compiler
 
-<img src="https://repl.it/badge/github/https12345678/BFC">
+<a href="https://replit.com/@https123456789/BFC?lite=true#replit/runOnReplit.md"><img src="https://repl.it/badge/github/https12345678/BFC"></a>
 <img src="https://img.shields.io/github/downloads/https123456789/BFC/total">
 <img src="https://img.shields.io/github/last-commit/https123456789/BFC">
 <hr>
