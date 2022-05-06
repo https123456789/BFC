@@ -1,3 +1,7 @@
+---
+title: Downloading
+nav_order: 2
+---
 # Downloading
 
 ## Note

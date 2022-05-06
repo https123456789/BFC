@@ -1,4 +1,7 @@
-# Why You Shouldn't Use The warnOnNegativeShift Falg:
+---
+title: Why You Shouldn't Use The warnOnNegativeShift Flag
+---
+# Why You Shouldn't Use The warnOnNegativeShift Flag:
 
 In this demonstration, we will use the `test3.bf` brainF program. First, we define the config file, `test3.bfc` (not the extension is `.bfc`).
 

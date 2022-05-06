@@ -1,3 +1,6 @@
+---
+title: Command Line Options
+---
 # Options
 
 - `-v,--verbose`
