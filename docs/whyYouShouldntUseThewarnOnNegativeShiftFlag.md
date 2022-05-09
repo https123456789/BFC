@@ -18,7 +18,6 @@ Next, we want to run BFC with our config file, so we will use the `-c` option ([
 $ ./bfc test3.bf -c test3.bfc
 [bfc] Warning: negitive shift attempted at test3.bf:5:0. Instruction skipped.
 [bfc] InvalidMemoryShiftError: memory pointer shifted beyond allocated memory at test3.bf:308:0.
-$ 
 ```
 
 You will notice that instead of throwing an error, BFC simply prints a warning and continues to parse the source code. An important thing to note however, is that BFC in addition to not throwing an error, also ignores the instruction. Below is a quick example.

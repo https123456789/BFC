@@ -7,7 +7,7 @@ echo "; Test 3 - Tests error handling
 <+
 " >> test3.bf
 echo "; Error shifted too far" >> test3.bf
-for i in {0..300}
+for i in {0..290}
 do
 	echo ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" >> test3.bf
 done

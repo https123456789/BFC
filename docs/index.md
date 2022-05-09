@@ -35,6 +35,12 @@ The latest stable version can be downloaded from [here](<>).
 
 The latest development build can be downloaded from [here](<https://github.com/https123456789/BFC/tree/main/dist>).
 
+> Please note that BFC requires a C compiler to be installed (see [the download page](</download>)).
+
+## Contributing
+
+See ([/contributing](</contributing>))
+
 #### Build Platforms
 
 |Platform|Pre-Built|
@@ -69,7 +75,11 @@ The compiler can be call with `./bfc [path to program]`.
 [-]
 ```
 
-Call: `./bfc myprogram.bf`
+Call:
+```shell
+$ ./bfc myprogram.bf
+$ ./executable
+```
 
 #### Result:
 

@@ -8,6 +8,9 @@ int checkCompiler(int argc, char *argv[]) {
 	options.add_options()
 		("version", "version")
 		("v,verbose", "verbose")
+		("e,execute", "execute")
+		("r,remove-executable", "remove-executable")
+		("o", "Output file name", cxxopts::value<std::string>()->default_value("executable"))
 		("c,config", "config", cxxopts::value<std::string>()->default_value(""));
 	auto  optres = options.parse(argc, argv);
 	if (optres["v"].as<bool>()) {
