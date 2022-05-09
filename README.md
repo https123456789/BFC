@@ -59,7 +59,11 @@ The compiler can be call with `./bfc [path to program]`.
 [-]
 ```
 
-#### Call: `./bfc myprogram.bf`
+#### Call:
+```shell
+$ ./bfc myprogram.bf
+$ ./executable
+```
 
 #### Result:
 

@@ -4,6 +4,7 @@ int versionTop = 0;
 int versionL2 = 0;
 int versionL3 = 1;
 
+void compile(std::string fn, int compiler);
 void printVersion(void);
 void printMessage(std::string message);
 /*
@@ -36,11 +37,25 @@ int main(int argc, char *argv[]) {
 	// Command line options/arguments
 	cxxopts::Options options("BFC", "A brainF Compiler");
 	options.add_options()
-		("version", "version")
-		("v,verbose", "verbose")
-		("c,config", "config", cxxopts::value<std::string>()->default_value(""));
+		("version", "Version")
+		("v,verbose", "Verbose output")
+		("e,execute", "Execute program")
+		("r,remove-executable", "Remove executable")
+		("o", "Output file name", cxxopts::value<std::string>()->default_value("executable"))
+		("c,config", "Config", cxxopts::value<std::string>()->default_value(""));
+	//options.parse_positional({"inputFile"});
 	auto optres = options.parse(argc, argv);
-
+	
+	if (argc < 2) {
+		std::cout << options.help() << std::endl;
+		_Exit(1);
+	}
+	
+	if (strcmp(argv[1], "help") == 0) {
+		std::cout << options.help() << std::endl;
+		_Exit(1);
+	}
+	
 	// Check for version options
 	if (optres["version"].as<bool>()) {
 		printVersion();
@@ -249,7 +264,10 @@ int main(int argc, char *argv[]) {
 			if (curinst == '\n') {
 				curinst = ' ';
 			}
-			if (optres["v"].as<bool>()) {
+			const auto p1 = std::chrono::system_clock::now();
+			const auto td = std::chrono::duration_cast<std::chrono::seconds>(p1.time_since_epoch()).count();
+			//std::cout << td << std::endl;
+			if (optres["v"].as<bool>() && ((int) td) % 2 == 0) {
 				std::cout << "[bfc-parse] Parsing" << s << " " << curinst << " " << percent << "%\r";
 			}
 			i += 1;
@@ -280,35 +298,53 @@ int main(int argc, char *argv[]) {
 	if (optres["v"].as<bool>()) {
 		std::cout << "[bfc] Compiling..." << std::endl;
 	}
-	int res = -1;
-	switch (compiler) {
-		case 1:
-			// Clang
-			res = std::system("clang -o executable executable.cpp");
-			break;
-		case 2:
-			// gcc
-			res = std::system("gcc -o executable executable.cpp");
-			break;
-	}
-	if (res/256 == 1) {
-		std::cout << "[bfc] An error occured during compiling." << std::endl;
-		res = std::system("rm executable.cpp");
-		_Exit(1);
-	}
+	// Compiler
+	compile(optres["o"].as<std::string>(), compiler);
+	
 	if (optres["v"].as<bool>()) {
 		std::cout << "[bfc] Done Compiling." << std::endl;
 	}
-	if (optres["v"].as<bool>()) {
-		std::cout << "[bfc] Executing..." << std::endl;
+	if (optres["e"].as<bool>()) {
+		if (optres["v"].as<bool>()) {
+			std::cout << "[bfc] Executing..." << std::endl;
+		}
+		int res = std::system("./executable");
+		std::cout << std::endl;
 	}
-	res = std::system("./executable");
-	std::cout << std::endl;
 	if (optres["v"].as<bool>()) {
 		std::cout << "[bfc] Execution complete." << std::endl;
 	}
-	res = std::system("rm executable executable.cpp");
+	int res = std::system("rm executable.cpp");
+	if (optres["r"].as<bool>()) {
+		res = std::system("rm executable");
+	}
 	return 0;
+}
+
+void compile(std::string fn, int compiler) {
+	int res = -1;
+	std::string invoc;
+	switch (compiler) {
+		case 1:
+			// Clang
+			invoc = "clang -o ";
+			invoc += fn;
+			invoc += " executable.cpp";
+			res = std::system(invoc.c_str());
+			break;
+		case 2:
+			// gcc
+			invoc = "gcc -o ";
+			invoc += fn;
+			invoc += " executable.cpp";
+			res = std::system(invoc.c_str());
+			break;
+	}
+	if (res/256 == 1) {
+		std::cout << "\033[31m[bfc] An error occured during compiling.\033[0m" << std::endl;
+		res = std::system("rm executable.cpp");
+		_Exit(1);
+	}
 }
 
 void printVersion(void) {

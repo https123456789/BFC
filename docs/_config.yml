@@ -3,3 +3,5 @@ remote_theme: just-the-docs/just-the-docs
 aux_links:
   "Github":
     - "//github.com/https123456789/BFC"
+  "Replit":
+    - "https://replit.com/@https123456789/BFC?lite=true#replit/runOnReplit.md"
