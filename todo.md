@@ -11,6 +11,28 @@ None
 
 ## Done
 
+### 5-14-2022
+- The verbose output for the compiling percentage is now only after a whole second has passed.
+- Created `test6.bf`
+	- Test 6 tests BFC's capabilities to handle and compile large files (like really big files).
+```bash
+File: test6.bf
+Size: 364847
+Blocks: 720
+IO Block: 4096
+regular file
+Device: 40009ch/4194460d
+Inode: 643
+Links: 1
+Access: (0644/-rw-r--r--)
+Uid: ( 1000/  runner)
+Gid: ( 1000/  runner)
+Access: 2022-05-14 14:18:50.472187197 +0000
+Modify: 2022-05-14 14:18:57.424177747 +0000
+Change: 2022-05-14 14:18:57.424177747 +0000
+Birth: 2022-05-14 14:18:50.472187197 +0000
+```
+
 ### 5-9-2022
 - Added more options
   - Added `-e` option (makes BFC execute the binary it created)

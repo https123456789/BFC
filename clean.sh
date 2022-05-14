@@ -4,9 +4,13 @@
 )
 (
 	cd dist
-	ARCH=`arch`
+	ARCH=$(arch)
 	mv bfc "$OSTYPE-$ARCH-bfc"
 )
 rm tests/bfc
 rm tests/testTimer
 rm testtools/testTimer
+(
+	cd tests
+	./deleteTests.sh
+)

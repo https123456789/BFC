@@ -14,3 +14,4 @@ This is a collection of all of the tests used to benchmark this program.
 | Test 3 | Tests error handling. | [link](</BFC/tests/test3>) | <img src="https://bfc-test.https12345678.repl.co/badge.php?test=3"> |
 | Test 4 | Tests more error handling. | [link](</BFC/tests/test4>) | <img src="https://bfc-test.https12345678.repl.co/badge.php?test=4"> |
 | Test 5 | Tests indentation support. | [link](</BFC/tests/test5>) | <img src="https://bfc-test.https12345678.repl.co/badge.php?test=5"> |
+| Test 6 | Tests really big files. | [link](</BFC/tests/test6>) | <img src="https://bfc-test.https12345678.repl.co/badge.php?test=6"> |
