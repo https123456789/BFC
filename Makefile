@@ -10,7 +10,7 @@ compile: objectFiles $(files)
 
 objectFiles:
 	@echo "Building object files (this might take a bit)..."
-	@clang++ -c $(files) -include-pch src/bfc.hpp.pch
+	@clang++ -c $(files)
 	@ mv *.o src
 
 buildTestTools:

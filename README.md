@@ -18,6 +18,11 @@
 <img src="https://bfc-test.https12345678.repl.co/badge.php?test=3">
 <img src="https://bfc-test.https12345678.repl.co/badge.php?test=4">
 <img src="https://bfc-test.https12345678.repl.co/badge.php?test=5">
+<img src="https://bfc-test.https12345678.repl.co/badge.php?test=6">
+
+## Contributing
+
+See ([/contributing](</contributing>))
 
 ## Downloading
 

@@ -13,7 +13,7 @@ This tests error handling by BFC (error in the input program). The errors tested
 
 ## Code
 
-> **Note**: I have removed the majority of the right shift instructions `>`, becuase there are ***way*** to many of them for me to resonably put in the file.
+> **Note**: I have removed the majority of the right shift instructions `>`, becuase there are ***way*** to many of them for me to reasonably put in the docs.
 
 ```brainfuck
 ; Test 3 - Tests error handling

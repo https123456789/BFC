@@ -22,12 +22,17 @@ nav_order: 1
 <img src="https://bfc-test.https12345678.repl.co/badge.php?test=3">
 <img src="https://bfc-test.https12345678.repl.co/badge.php?test=4">
 <img src="https://bfc-test.https12345678.repl.co/badge.php?test=5">
+<img src="https://bfc-test.https12345678.repl.co/badge.php?test=6">
 
 ## Pages
 
 - [Options](<options>)
 - [Config Files](<configFiles>)
 - [Tests](</BFC/tests>)
+
+## Contributing
+
+See ([/contributing](</contributing>))
 
 ## Downloading
 
@@ -36,10 +41,6 @@ The latest stable version can be downloaded from [here](<>).
 The latest development build can be downloaded from [here](<https://github.com/https123456789/BFC/tree/main/dist>).
 
 > Please note that BFC requires a C compiler to be installed (see [the download page](</download>)).
-
-## Contributing
-
-See ([/contributing](</contributing>))
 
 #### Build Platforms
 

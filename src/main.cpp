@@ -4,9 +4,6 @@ int versionTop = 0;
 int versionL2 = 0;
 int versionL3 = 1;
 
-void compile(std::string fn, int compiler);
-void printVersion(void);
-void printMessage(std::string message);
 /*
 namespace BFCRuntime {
 	// Memory
@@ -62,9 +59,13 @@ int main(int argc, char *argv[]) {
 		_Exit(0);
 	}
 
+	if (optres["v"].as<bool>()) {
+		std::cout << "[bfc] BFC - A BrainF Compiler" << std::endl;
+	}
+	
 	// Check for compiler
 	if (optres["v"].as<bool>()) {
-		std::cout << "[bfc] Checking for compiler..." << std::endl;
+		std::cout << "\033[34m[bfc] Checking for compiler...\033[0m" << std::endl;
 	}
 	int compiler = checkCompiler(argc, argv);
 	if (compiler == -1) {
@@ -75,21 +76,17 @@ int main(int argc, char *argv[]) {
 	// Detect build platform
 	if (ARCHITECTURE == 0) {
 		if (optres["v"].as<bool>()) {
-			std::cout << "[bfc] Building for x86..." << std::endl;
+			std::cout << "\033[34m[bfc] Building for x86...\033[0m" << std::endl;
 		}
 	} else {
 		if (optres["v"].as<bool>()) {
-			std::cout << "[bfc] Building for arm..." << std::endl;
+			std::cout << "\033[34m[bfc] Building for arm...\033[0m" << std::endl;
 		}
-	}
-
-	if (optres["v"].as<bool>()) {
-		std::cout << "[bfc] BFC - A BrainF Compiler" << std::endl;
 	}
 
 	// Load program
 	if (optres["v"].as<bool>()) {
-		std::cout << "[bfc] Loading " << argv[1] << "..." << std::endl;
+		std::cout << "\033[34m[bfc] Loading " << argv[1] << "...\033[0m" << std::endl;
 	}
 	std::string sourcefile = argv[1];
 	std::ifstream inprogfile(argv[1]);
@@ -123,24 +120,24 @@ int main(int argc, char *argv[]) {
 	if (optres["c"].as<std::string>() != "") {
 		// Load and parse config file
 		if (optres["v"].as<bool>()) {
-			std::cout << "[bfc-config] Loading config file..." << std::endl;
+			std::cout << "\033[34m[bfc-config] Loading config file...\033[0m" << std::endl;
 		}
 		std::ifstream configFile(optres["c"].as<std::string>());
 		nlohmann::json configData;
 		configFile >> configData;
 		if(optres["v"].as<bool>()) {
-			std::cout << "[bfc-config] Config file loaded. Parsing..." << std::endl;
+			std::cout << "\r\033[34m[bfc-config] Config file loaded. Parsing...\033[0m" << std::endl;
 		}
 		if (configData["memoryAllocationSize"] > 0) {
 			memorySize = (int)configData["memoryAllocationSize"];
 			if (optres["v"].as<bool>()) {
-				std::cout << "[bfc-config] Memory Alloocation Size: " << memorySize << std::endl;
+				std::cout << "\033[34m[bfc-config] Memory Alloocation Size: " << memorySize << "\033[0m" << std::endl;
 			}
 		}
 		if (configData["warnOnNegitiveShift"]) {
 			warnOnNegitiveShift = configData["warnOnNegitiveShift"];
 			if (optres["v"].as<bool>()) {
-				std::cout << "[bfc-config] Warning on negitive shifting. (Not Recomended)" << std::endl;
+				std::cout << "\033[34m[bfc-config] Warning on negitive shifting. (Not Recomended)\033[0m" << std::endl;
 			}
 		}
 		configFile.close();
@@ -268,7 +265,7 @@ int main(int argc, char *argv[]) {
 			const auto td = std::chrono::duration_cast<std::chrono::seconds>(p1.time_since_epoch()).count();
 			//std::cout << td << std::endl;
 			if (optres["v"].as<bool>() && ((int) td) % 2 == 0) {
-				std::cout << "[bfc-parse] Parsing" << s << " " << curinst << " " << percent << "%\r";
+				std::cout << "\033[34m[bfc-parse] Parsing" << s << " " << curinst << " \033[0m\033[92m" << percent << "%\033[0m\r";
 			}
 			i += 1;
 		}
@@ -285,7 +282,7 @@ int main(int argc, char *argv[]) {
 	}
 	cp += "}";
 	if (optres["v"].as<bool>()) {
-		std::cout << "[bfc] Done parsing." << std::endl;
+		std::cout << "\033[34m[bfc] Done parsing.     \033[0m\033[92m100%\033[0m" << std::endl;
 	}
 	// Exit if there are errors
 	if (errorCount > 0) {
@@ -296,36 +293,48 @@ int main(int argc, char *argv[]) {
 	exf << cp;
 	exf.close();
 	if (optres["v"].as<bool>()) {
-		std::cout << "[bfc] Compiling..." << std::endl;
+		std::cout << "\033[34m[bfc] Compiling...\033[0m" << std::endl;
 	}
 	// Compiler
-	compile(optres["o"].as<std::string>(), compiler);
+	compile(
+		optres["o"].as<std::string>(),
+		compiler,
+		optres["v"].as<bool>()
+	);
 	
 	if (optres["v"].as<bool>()) {
-		std::cout << "[bfc] Done Compiling." << std::endl;
+		std::cout << "\033[34m[bfc] Done Compiling.\033[0m" << std::endl;
 	}
 	if (optres["e"].as<bool>()) {
 		if (optres["v"].as<bool>()) {
-			std::cout << "[bfc] Executing..." << std::endl;
+			std::cout << "\033[34m[bfc] Executing...\033[0m" << std::endl;
 		}
 		int res = std::system("./executable");
 		std::cout << std::endl;
 	}
 	if (optres["v"].as<bool>()) {
-		std::cout << "[bfc] Execution complete." << std::endl;
+		std::cout << "\033[34m[bfc] Execution complete.\033[0m" << std::endl;
 	}
 	int res = std::system("rm executable.cpp");
 	if (optres["r"].as<bool>()) {
-		res = std::system("rm executable");
+		if (optres["v"].as<bool>()) {
+			std::cout << "\033[34m[bfc] Removing " << optres["o"].as<std::string>() << ".\033[0m" << std::endl;
+		}
+		res = std::system(
+			(std::string("rm ") + optres["o"].as<std::string>()).c_str()
+		);
 	}
 	return 0;
 }
 
-void compile(std::string fn, int compiler) {
+void compile(std::string fn, int compiler, bool isVerbose) {
 	int res = -1;
 	std::string invoc;
 	switch (compiler) {
 		case 1:
+			if (isVerbose) {
+				std::cout << "\033[34m[bfc-compiler-internal] Using clang...\033[0m" << std::endl;
+			}
 			// Clang
 			invoc = "clang -o ";
 			invoc += fn;
@@ -333,11 +342,18 @@ void compile(std::string fn, int compiler) {
 			res = std::system(invoc.c_str());
 			break;
 		case 2:
+			if (isVerbose) {
+				std::cout << "\033[34m[bfc-compiler-internal] Using gcc...\033[0m" << std::endl;
+			}
 			// gcc
 			invoc = "gcc -o ";
 			invoc += fn;
 			invoc += " executable.cpp";
 			res = std::system(invoc.c_str());
+			break;
+		default:
+			std::cerr << "\033[31m[bfc-compiler-internal] No C compiler is present on the system. BFC can't compile. Exiting...\033[0m" << std::endl;
+			_Exit(1);
 			break;
 	}
 	if (res/256 == 1) {

@@ -66,3 +66,6 @@
 #endif
 
 int checkCompiler(int argc, char *argv[]);
+void compile(std::string fn, int compiler, bool isVerbose);
+void printVersion(void);
+void printMessage(std::string message);
