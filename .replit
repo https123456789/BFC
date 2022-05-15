@@ -1,1 +1,2 @@
 run = "./build.sh && cd tests && ./bfc test1.bf"
+entrypoint = "todo.md"
