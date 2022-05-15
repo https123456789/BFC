@@ -1,17 +1,17 @@
 # BFC - A BrainF Compiler
 
-<a href="https://replit.com/@https123456789/BFC?lite=true#replit/runOnReplit.md"><img src="https://repl.it/badge/github/https12345678/BFC"></a>
-<img src="https://img.shields.io/github/downloads/https123456789/BFC/total">
-<img src="https://img.shields.io/github/last-commit/https123456789/BFC">
+<a href="https://replit.com/@https123456789/BFC?lite=true#replit/runOnReplit.md"><img src="https://img.shields.io/static/v1?style=for-the-badge&label=&message=Run%20on%20Replit&logo=replit"></a>
+<img src="https://img.shields.io/github/downloads/https123456789/BFC/total?style=for-the-badge">
+<img src="https://img.shields.io/github/last-commit/https123456789/BFC?style=for-the-badge">
 <hr>
-<img src="https://img.shields.io/github/stars/https123456789/BFC">
-<img src="https://img.shields.io/github/watchers/https123456789/BFC">
-<img src="https://img.shields.io/github/commit-activity/y/https123456789/BFC">
-<img src="https://img.shields.io/github/contributors/https123456789/BFC?color=success">
+<img src="https://img.shields.io/github/stars/https123456789/BFC?style=for-the-badge">
+<img src="https://img.shields.io/github/watchers/https123456789/BFC?style=for-the-badge">
+<img src="https://img.shields.io/github/commit-activity/y/https123456789/BFC?style=for-the-badge">
+<img src="https://img.shields.io/github/contributors/https123456789/BFC?color=success&style=for-the-badge">
 <hr>
 <img src="https://www.codefactor.io/repository/github/https123456789/BFC/badge">
-<img src="https://img.shields.io/tokei/lines/github/https123456789/BFC?label=Lines%20of%20Code">
-<img src="https://img.shields.io/github/repo-size/https123456789/BFC">
+<img src="https://img.shields.io/tokei/lines/github/https123456789/BFC?label=Lines%20of%20Code&style=for-the-badge">
+<img src="https://img.shields.io/github/repo-size/https123456789/BFC?style=for-the-badge">
 <hr>
 <img src="https://bfc-test.https12345678.repl.co/badge.php?test=1">
 <img src="https://bfc-test.https12345678.repl.co/badge.php?test=2">
