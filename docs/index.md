@@ -13,7 +13,7 @@ nav_order: 1
 <img src="https://img.shields.io/github/commit-activity/y/https123456789/BFC?style=for-the-badge">
 <img src="https://img.shields.io/github/contributors/https123456789/BFC?color=success&style=for-the-badge">
 <hr>
-<img src="https://www.codefactor.io/repository/github/https123456789/BFC/badge">
+<img src="https://www.codefactor.io/repository/github/https123456789/BFC/badge?style=for-the-badge">
 <img src="https://img.shields.io/tokei/lines/github/https123456789/BFC?label=Lines%20of%20Code&style=for-the-badge">
 <img src="https://img.shields.io/github/repo-size/https123456789/BFC?style=for-the-badge">
 <hr>
