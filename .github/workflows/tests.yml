@@ -11,4 +11,5 @@ jobs:
       - name: Update Tests
         run: |
           echo "Updating tests..."
-          curl "https://bfc-test.https12345678.repl.co/test.php"
+          R=$(curl "https://bfc-test.https12345678.repl.co/test.php?test")
+          if [ "$R" != "0" ]; then exit 1; fi
