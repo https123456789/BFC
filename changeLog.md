@@ -6,6 +6,7 @@
 - Tests workflow runs on pushes to any branch.
 - Fixed `build.sh` and `clean.sh`.
 - Changed style for badges.
+- Tests workflow is modified to actually work.
 
 ## 5-14-2022
 - The verbose output for the compiling percentage is now only after a whole second has passed.
