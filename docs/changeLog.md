@@ -1,3 +1,7 @@
+---
+title: Change Log
+nav_order: 3
+---
 # Change Log
 
 ## 5-15-2022
