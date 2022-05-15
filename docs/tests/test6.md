@@ -11,7 +11,7 @@ This tests large files.
 ## Code
 
 > **Note**: I have removed the majority of the right shift instructions `>`, becuase there are ***way*** to many of them for me to reasonably put in the docs.
-> 
+
 ```brainfuck
 ; Test 6 - Tests hecka big files
 
