@@ -7,6 +7,8 @@ has_toc: false
 
 This is a collection of all of the tests used to benchmark this program.
 
+![](<https://bfc-test.https12345678.repl.co/overview.php>)
+
 | Test | Description | Link | Status |
 |------|-------------|------|--------|
 | Test 1 | Tests basic functionality (aka does it work). | [link](</BFC/tests/test1>) | <img src="https://bfc-test.https12345678.repl.co/badge.php?test=1"> |

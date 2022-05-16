@@ -4,6 +4,10 @@ nav_order: 3
 ---
 # Change Log
 
+## 5-16-2022
+- Added `-i` option.
+- Refactored more of `main.cpp`.
+
 ## 5-15-2022
 - Moved change log into its own file.
 - Added change log to docs.
