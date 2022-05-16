@@ -26,6 +26,6 @@ This tests the functionality of comments.
 ## Expected Result
 
 ```
-$ ./bfc test2.bf
+$ ./bfc test2.bf -er
 o
 ```

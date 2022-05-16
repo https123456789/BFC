@@ -60,7 +60,7 @@ The compiler can be call with `./bfc [path to program]`.
 	myprogram.bf
 ```
 
-#### `myprogram.bf`:
+`myprogram.bf`:
 ```brainfuck
 >++++++++++[<++++++++>-]<++++.
 [-]
@@ -78,7 +78,7 @@ $ ./bfc myprogram.bf
 $ ./executable
 ```
 
-#### Result:
+Result:
 
 ```
 Test

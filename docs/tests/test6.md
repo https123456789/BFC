@@ -21,7 +21,7 @@ This tests large files.
 ## Expected Results
 
 ```
-$ ./bfc test6.bf
+$ ./bfc test6.bf -er
 $
 ```
 

@@ -24,6 +24,6 @@ This tests the basic functionality of BFC (aka does the program even work).
 ## Expected Result
 
 ```
-$ ./bfc test1.bf
+$ ./bfc test1.bf -er
 Test
 ```

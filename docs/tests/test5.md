@@ -39,6 +39,6 @@ This tests indentation. Any format of indentation should compile, from one chara
 ## Expected Results
 
 ```
-$ ./bfc test5.bf
+$ ./bfc test5.bf -er
 Test
 ```

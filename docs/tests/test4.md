@@ -27,6 +27,6 @@ This tests error handling by BFC (error in the input program). The errors tested
 ## Expected Results
 
 ```
-$ ./bfc test4.bf
+$ ./bfc test4.bf -er
 [bfc-parse] UnexpectedLiteralError: unexpected literal '?' at test4.bf:8:0.
 ```
