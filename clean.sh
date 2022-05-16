@@ -1,6 +1,7 @@
 (
 	cd src
 	rm ./*.o
+	rm ./*.tmp
 )
 (
 	cd dist

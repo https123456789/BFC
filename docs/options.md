@@ -11,6 +11,10 @@ title: Command Line Options
 
  Execute program as well.
 
+- `-i --info`
+
+ Print info about BFC.
+
 - `-o`
 
  Specify the filename of the resulting executable.

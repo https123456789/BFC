@@ -7,6 +7,7 @@ int checkCompiler(int argc, char *argv[]) {
 	cxxopts::Options options("BFC", "A brainF Compiler");
 	options.add_options()
 		("version", "version")
+		("i,info", "Print info")
 		("v,verbose", "verbose")
 		("e,execute", "execute")
 		("r,remove-executable", "remove-executable")
