@@ -23,7 +23,7 @@ Before your make any changes, please do the following:
  git pull https://github.com/[yourname]/BFC.git
  ```
  
-2. Make a new branch using the following syntax:
+3. Make a new branch using the following syntax:
 
  Syntax: `dev-[myname]`
  Git commands:
@@ -46,5 +46,5 @@ Once you have make changes to the repository:
 
 ## Important things
 
-- Don't include built files in your PR unless they are located in the dist folder with the following name syntax: `dist/[os]-[architecture]-bfc` or `dist/[os]-[architecture]-bfc.exe`
-- Making changes may require changes to the documentation. Make sure you adjust the documentation according to your changes.
+- **Don't include built files** in your PR unless they are located in the dist folder with the following name syntax: `dist/[os]-[architecture]-bfc` or `dist/[os]-[architecture]-bfc.exe`
+- Making changes may require changes to the documentation. **Make sure you adjust the documentation according to your changes.**

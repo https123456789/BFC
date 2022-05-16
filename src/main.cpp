@@ -1,9 +1,5 @@
 #include "bfc.hpp"
 
-int versionTop = 0;
-int versionL2 = 0;
-int versionL3 = 1;
-
 /*
 namespace BFCRuntime {
 	// Memory
@@ -34,7 +30,8 @@ int main(int argc, char *argv[]) {
 	// Command line options/arguments
 	cxxopts::Options options("BFC", "A brainF Compiler");
 	options.add_options()
-		("version", "Version")
+		("version", "Print version")
+		("i,info", "Print info")
 		("v,verbose", "Verbose output")
 		("e,execute", "Execute program")
 		("r,remove-executable", "Remove executable")
@@ -47,7 +44,8 @@ int main(int argc, char *argv[]) {
 		std::cout << options.help() << std::endl;
 		_Exit(1);
 	}
-	
+
+	// Check for help
 	if (strcmp(argv[1], "help") == 0) {
 		std::cout << options.help() << std::endl;
 		_Exit(1);
@@ -59,6 +57,12 @@ int main(int argc, char *argv[]) {
 		_Exit(0);
 	}
 
+	// Check for info option
+	if (optres["i"].as<bool>()) {
+		printInfo();
+		_Exit(0);
+	}
+	
 	if (optres["v"].as<bool>()) {
 		std::cout << "[bfc] BFC - A BrainF Compiler" << std::endl;
 	}
@@ -327,44 +331,8 @@ int main(int argc, char *argv[]) {
 	return 0;
 }
 
-void compile(std::string fn, int compiler, bool isVerbose) {
-	int res = -1;
-	std::string invoc;
-	switch (compiler) {
-		case 1:
-			if (isVerbose) {
-				std::cout << "\033[34m[bfc-compiler-internal] Using clang...\033[0m" << std::endl;
-			}
-			// Clang
-			invoc = "clang -o ";
-			invoc += fn;
-			invoc += " executable.cpp";
-			res = std::system(invoc.c_str());
-			break;
-		case 2:
-			if (isVerbose) {
-				std::cout << "\033[34m[bfc-compiler-internal] Using gcc...\033[0m" << std::endl;
-			}
-			// gcc
-			invoc = "gcc -o ";
-			invoc += fn;
-			invoc += " executable.cpp";
-			res = std::system(invoc.c_str());
-			break;
-		default:
-			std::cerr << "\033[31m[bfc-compiler-internal] No C compiler is present on the system. BFC can't compile. Exiting...\033[0m" << std::endl;
-			_Exit(1);
-			break;
-	}
-	if (res/256 == 1) {
-		std::cout << "\033[31m[bfc] An error occured during compiling.\033[0m" << std::endl;
-		res = std::system("rm executable.cpp");
-		_Exit(1);
-	}
-}
-
 void printVersion(void) {
-	std::cout << "[bfc] Version:" << std::endl << "BFC " << versionTop << "." << versionL2 << "." << versionL3 << std::endl;
+	std::cout << "BFC " << versionTop << "." << versionL2 << "." << versionL3 << std::endl;
 }
 
 void printMessage(std::string message) {

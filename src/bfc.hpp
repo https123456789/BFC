@@ -65,7 +65,14 @@
 #define OS 6
 #endif
 
+#ifndef versionTop
+#define versionTop "0"
+#define versionL2 "0"
+#define versionL3 "1"
+#endif
+
 int checkCompiler(int argc, char *argv[]);
 void compile(std::string fn, int compiler, bool isVerbose);
 void printVersion(void);
 void printMessage(std::string message);
+void printInfo(void);
