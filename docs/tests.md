@@ -1,5 +1,4 @@
 ---
-has_children: true
 title: Tests
 has_toc: false
 ---
