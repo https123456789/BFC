@@ -4,6 +4,7 @@
 - Switched the build system to make.
 - Removed clutter.
 - Change the tests system.
+- Remove the `warnOnNegativeShift` flag.
 
 ## 5-16-2022
 - Added `-i` option.
