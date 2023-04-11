@@ -2,32 +2,6 @@
 #include "cxxopts.hpp"
 #include "json.hpp"
 
-/*
-namespace BFCRuntime {
-	// Memory
-	int memorySize = 30000;
-	int memory[30000];
-	int memoryPointer = 0;
-
-	// Warnings
-	bool warnOnNegitiveShift = false;
-
-	// Errors
-	int errorCount = 0;
-	int errorMax = 1;
-	void initMemory(void) {
-		for (int i = 0; i < memorySize; i++) {
-			memory[i] = 0;
-		}
-	}
-	int read() {
-		int c;
-		c = getchar();
-		while(getchar()!=10) {}
-		return c;
-	}
-}
-*/
 int main(int argc, char *argv[]) {
 	// Command line options/arguments
 	cxxopts::Options options("BFC", "A brainF Compiler");
@@ -115,9 +89,6 @@ int main(int argc, char *argv[]) {
 	int memorySize = 30000;
 	int memoryPointer = 0;
 
-	// Warnings
-	bool warnOnNegitiveShift = false;
-
 	// Errors
 	int errorCount = 0;
 	int errorMax = 1;
@@ -138,12 +109,6 @@ int main(int argc, char *argv[]) {
 			memorySize = (int)configData["memoryAllocationSize"];
 			if (optres["v"].as<bool>()) {
 				std::cout << "\033[34m[bfc-config] Memory Alloocation Size: " << memorySize << "\033[0m" << std::endl;
-			}
-		}
-		if (configData["warnOnNegitiveShift"]) {
-			warnOnNegitiveShift = configData["warnOnNegitiveShift"];
-			if (optres["v"].as<bool>()) {
-				std::cout << "\033[34m[bfc-config] Warning on negitive shifting. (Not Recomended)\033[0m" << std::endl;
 			}
 		}
 		configFile.close();
@@ -184,19 +149,13 @@ int main(int argc, char *argv[]) {
 					break;
 				case '<':
 					{
-						memoryPointer -= 1;
-						if (memoryPointer < 0) {
-							if (warnOnNegitiveShift) {
-								std::cout << "\033[33m[bfc] Warning: negitive shift attempted at " << argv[1] << ":" << linecount << ":" << charcount << ". Instruction skipped.\033[0m" << std::endl;
-								memoryPointer += 1;
-								break;
-							} else {
-								std::cerr << "\033[31m[bfc] InvalidMemoryShiftError: memory pointer shifted to a negitive index at " << argv[1] << ":" << linecount << ":" << charcount << ":\033[0m" << std::endl;
-								errorCount += 1;
-								if (errorCount >= errorMax) {
-									_Exit(3);
-								}
-							}
+                        memoryPointer -= 1;
+                        if (memoryPointer < 0) {
+                            std::cerr << "\033[31m[bfc] InvalidMemoryShiftError: memory pointer shifted to a negitive index at " << argv[1] << ":" << linecount << ":" << charcount << ":\033[0m" << std::endl;
+                            errorCount += 1;
+                            if (errorCount >= errorMax) {
+                                _Exit(3);
+                            }
 						}
 						cp += "pointerindex-=1;";
 					}
