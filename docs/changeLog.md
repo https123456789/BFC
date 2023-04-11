@@ -4,6 +4,10 @@ nav_order: 3
 ---
 # Change Log
 
+## 4-11-2023
+- Switched the build system to make.
+- Removed clutter.
+
 ## 5-16-2022
 - Added `-i` option.
 - Refactored more of `main.cpp`.

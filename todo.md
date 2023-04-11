@@ -4,7 +4,8 @@
 None
 
 ## Top Priority
-- Speed Improvement
+- Switch config format to TOML
+- Convert to using assembly instead of clang++, clang, and gcc.
 
 ## Low Priority
-- Convert to using assembly instead of clang++, clang, and gcc.
+- Speed Improvement

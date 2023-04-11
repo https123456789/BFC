@@ -1,5 +1,10 @@
 # Change Log
 
+## 4-11-2023
+- Switched the build system to make.
+- Removed clutter.
+- Change the tests system.
+
 ## 5-16-2022
 - Added `-i` option.
 - Refactored more of `main.cpp`.

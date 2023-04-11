@@ -1,4 +1,5 @@
 #include "bfc.hpp"
+#include "cxxopts.hpp"
 
 int checkCompiler(int argc, char *argv[]) {
 	int retval = -1;

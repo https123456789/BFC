@@ -1,0 +1,4 @@
+dist
+tests/test3.bf
+tests/test6.bf
+**/*.o
