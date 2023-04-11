@@ -1,2 +1,2 @@
-run = "./build.sh && cd tests && ./bfc test1.bf"
+run = "make run"
 entrypoint = "todo.md"

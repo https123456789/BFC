@@ -1,4 +1,6 @@
 #include "bfc.hpp"
+#include "cxxopts.hpp"
+#include "json.hpp"
 
 /*
 namespace BFCRuntime {

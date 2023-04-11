@@ -1,29 +1,45 @@
-files := src/main.cpp src/compiler.cpp
-ofiles := src/main.o src/compiler.o
-.SILENT: build
-build: objectFiles compile copy move buildTestTools
-	@echo "Built."
+TT = $(shell c++ -dumpmachine)
+BFC = dist/$(TT)-bfc
+BFC_TEST_FLAGS = -re
 
-compile: objectFiles $(files)
-	@echo "Compiling object files to executable..."
-	@clang++ -o bfc $(ofiles)
+SRC := $(shell find src -type f -name "*.cpp")
+OFILES := $(SRC:.cpp=.o)
 
-objectFiles:
-	@echo "Building object files (this might take a bit)..."
-	@clang++ -c $(files)
-	@ mv *.o src
+.PHONY: all
+all: detect $(BFC)
+	cp $(BFC) dist/bfc
 
-buildTestTools:
-	@echo "Building test tools..."
-	@cd testtools; \
-	clang++ -o testTimer testTimer.cpp
-	@cp testtools/testTimer tests
+.PHONY: detect
+detect:
+	@echo "Detecting required dependencies..."
+	@echo "C++..."
+	@sh -c "c++ --version > /dev/null" 2> /dev/null || ( echo "Please install a C++ compiler."; exit 1 )
+	@echo "NASM..."
+	@sh -c "nasm --version > /dev/null" 2> /dev/null || ( echo "Please install NASM."; exit 1 )
+	@echo "All dependencies were found."
 
-copy:
-	@cp bfc tests
+.PHONY: test
+test: $(BFC)
+	@echo "Testing..."
+	@echo "Extracting Compressed tests..."
+	@chmod +x tests/*.sh
+	@cd tests && ./buildTests.sh
+	./$(BFC) tests/test1.bf BFC_TEST_FLAGS > /dev/null
+	./$(BFC) tests/test2.bf BFC_TEST_FLAGS > /dev/null
+	./$(BFC) tests/test3.bf BFC_TEST_FLAGS 2> /dev/null || echo -n
+	./$(BFC) tests/test4.bf BFC_TEST_FLAGS 2> /dev/null || echo -n
+	./$(BFC) tests/test5.bf BFC_TEST_FLAGS
+	./$(BFC) tests/test6.bf BFC_TEST_FLAGS
+	@echo "Cleaning up..."
+	@cd tests && ./deleteTests.sh
 
-move:
-	@mv bfc dist
-
+.PHONY: clean
 clean:
-	@rm src/*.o
+	rm -fr dist $(BFC) $(OFILES)
+
+$(BFC): $(OFILES)
+	mkdir -p dist
+	c++ -o $@ $^
+
+%.o: %.cpp
+	c++ -o $@ -c $< -Iinclude -Ilib

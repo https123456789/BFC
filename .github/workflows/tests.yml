@@ -8,8 +8,5 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Update Tests
-        run: |
-          echo "Updating tests..."
-          R=$(curl "https://bfc-test.https12345678.repl.co/test.php?test")
-          if [ "$R" != "0" ]; then exit 1; fi
+      - name: Test
+        run: make test

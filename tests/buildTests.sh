@@ -30,4 +30,4 @@ do
 	done
 done
 
-echo -e "\rDone.    "
+echo -en "\r         \r"
